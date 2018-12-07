@@ -1,0 +1,187 @@
+body {
+    font-family: "roboto", sans-serif;
+    background-color: #1c1f24;
+    color: white;
+}
+
+h1 {
+	font-size: 22pt;
+	font-family: "oswald", sans-serif;
+	color: #cca300;
+	text-align: right;
+	line-height: 0.8;
+	font-style: oblique;
+}
+h2 {
+	font-size: 13pt;
+	font-family: "oswald", sans-serif;
+	color: #cca300;
+	text-align: right;
+	line-height: 0.5;
+	font-style: oblique;
+}
+
+
+#barchart {
+    width: 700;
+    height: 400;
+}
+
+.bc_sel {
+    font-size: 10pt;
+    display: flex;
+    width: 500;
+    align-items: center;
+	text-align:left;
+}
+
+.hm_sel {
+    font-size: 10pt;
+    display: flex;
+    width: 500;
+    align-items: center;
+	text-align: left;
+}
+
+.date_form {
+    font-size: 10pt;
+    font-family: 'roboto', sans-serif;
+    display: block;
+    width: 500;
+    align-items: center;
+	text-align: center;
+}
+
+.bar_rating {
+    fill: #f3ce13; /* IMDb logo color */
+    opacity: 0.9;
+}
+
+.axis {
+    font-size: 13px;
+    font-family: "roboto thin", sans-serif;
+    font-weight: bold;
+    text-align: right;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+}
+
+.specialaxis {
+    fill: none;
+    display: none;
+}
+
+.label {
+    font-family: "oswald", sans-serif;
+    font-size: 13px;
+}
+
+.tooltip {
+    font-family: "oswald black", sans-serif;
+}
+
+
+#title {
+	position: fixed;
+    top: 7px;
+    right: 110px;
+	z-index: 3;
+	text-shadow: 2px 2px 4px #000000;
+	
+}
+#statue{
+	position: fixed;
+    top: 10px;
+    right: 10px;
+	width: 120px;
+	z-index: 3;
+}
+
+#mind {
+	margin-left:100px;
+}
+
+path {
+    fill: #ffffff;
+    fill-opacity: 0.8;
+    stroke: #111;
+    z-index: 4;
+}
+
+path.active {
+    fill: blue;
+}
+
+.hm_axis {
+    fill: #ffffff;
+    fill-opacity: 0.8;
+    font-family: "roboto thin", sans-serif;
+    font-size: 9pt;
+}
+
+.hm_stuff {
+    stroke: #E6E6E6;
+}
+
+.bubble, .node, .serie {
+    font-family: "roboto", sans-serif;
+}
+
+.helper {
+    display: none;
+}
+
+.LT {
+	height: 350px;
+    width: 550px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+    padding-top: 5px;
+	padding-left: 10px;
+    left: 0;
+}
+
+
+
+.RT {
+	height: 55%;
+    width: 60%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+    right: 0;
+	
+}
+.LB {
+	height: 310px;
+    width: 40%;
+    position: fixed;
+    z-index: 1;
+    bottom: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+    left: 0;
+}
+.RB {
+	height: 45%;
+    width: 60%;
+    position: fixed;
+    z-index: 1;
+    bottom: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+    right: 0; 
+}
+
+#legend{
+	margin-left:510px;
+	margin-top: 180px;
+	font-size: 10pt;
+}

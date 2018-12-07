@@ -1,0 +1,113 @@
+ <!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>Emmy Awards</title>
+<link rel="icon" href="icon.ico">
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css?family=Oswald|Roboto" rel="stylesheet">
+	<script src="d3.js" charset="utf-8"></script>
+	<script src="barchart.js" charset="utf-8"></script>
+	<script src="bubble.js" charset="utf-8"></script>
+	<script src="geomap.js" charset="utf-8"></script>
+	<script src="heatmap.js" charset="utf-8"></script>
+
+</head>
+
+
+
+<body>
+<div id="title">
+
+<h1 style="margin-right: 20px; margin-bottom:30px;">Emmy Awards</h1>
+<h2>An inside look at the</h2>
+<h2>most successful</h2>
+<h2>TV shows & actors</h2>
+<img id="statue" src="emmy_statue.png" alt="Emmy awards" >
+</div>
+
+<div class="LT" id="map">
+	<form action="" name="bc_form" class="bc_sel">
+		<table>
+		<tr> 
+			<th colspan="3" > <span> Show: </span> </th>
+			<th style="width:40px"> </th>
+			<th colspan="3"> <span> Sort by: </span> </th>
+		</tr>
+		<tr> 
+			<th><input type="checkbox" name="option" id="check_rating" onchange="handleSelect()" checked> Rating <br></th>
+			<th><input type="checkbox" name="option" id="check_wins" onchange="handleWins()" checked> Wins<br></th>
+			<th><input type="checkbox" name="option" id="check_nominees" onchange="handleNominees()" checked > Nominees<br></th>
+			<th> </th>
+			<th><input type="radio" name="bc" id="sort_wins" value="wins" onchange="handleClick(this)" checked> Wins<br></th>
+			<th><input type="radio" name="bc" id="sort_nominees" value="nominees" onchange="handleClick(this)"> Nominees<br> </th>
+			<th><input type="radio" name="bc" id="sort_rating" value="rating" onchange="handleClick(this)"> Rating<br> </th>
+		</tr>
+		</table>
+      </form>
+	  
+	<div id="barchart">
+    </div>
+	
+</div>
+
+<div id="legend">
+	<table>
+	
+			<tr ><th><div style="background-color: #996600; width:15px; color: #996600;">_</div></th>
+				<th><div style="color: #996600; text-align:left;"> wins per actor</div></th>
+				
+			</tr>
+			<tr ><th><div style="background-color: #cca300; color: #cca300;">_</div></th>
+				<th><div style=" color: #cca300; text-align:left; "> wins per show</div></th>
+			</tr>
+			<tr ><th><div style="background-color: #adad85; color: #adad85;">_</div></th>
+				<th><div style="color: #adad85; text-align:left;"> nominees per actor</div></th>
+			</tr>
+			<tr ><th><div style="background-color: #7a7a52; color: #7a7a52;">_</div></th>
+				<th><div style=" color: #7a7a52; text-align:left; "> nominees per show</div></th>
+			</tr>
+			
+			<tr ><th><div style="background-color: #f3ce13; color: #f3ce13;">_</div></th>
+				<th><div style=" color: #f3ce13; text-align:left; "> IMDB rating</div></th>
+			</tr>
+		
+	</table>
+	</div>
+
+<div class="RT">
+	<div id="geomap"></div>
+</div>
+	
+<div class="LB">
+	<input class="helper" type="text" id="network" value="" >
+	<input class="helper type="text" id="serie" value="" >
+	<div id="mind">
+	</div>
+</div>
+
+<div class="RB">
+	<form action="" name="date" class="date_form">
+		<span>Show wins and nominations from: </span>
+		<input type="number" id="firstyear" min="1949" max="2017" step="1" value="1949" style="font-family: 'oswald', sans-serif;" onchange="selectHeatMapRange()"></input>
+		<span> to: </span>
+		<input type="number" id="lastyear" min="1949" max="2017" step="1" value="2017" style="font-family: 'oswald', sans-serif;" onchange="selectHeatMapRange()"></input>
+	</form>
+	<div id="heatmap"></div>
+	<form action="" name="bc_form" class="bc_sel">
+		<table>
+		<tr>
+			<th colspan="3"> <span> Sort by: </span> </th>
+		</tr>
+		<tr> 
+			<th><input type="radio" name="option" id="hm_wins" onchange="selectHeatMapData()"> Wins<br></th>
+			<th><input type="radio" name="option" id="hm_nominees" onchange="selectHeatMapData()" checked> Nominees <br></th>
+		</tr>
+		</table>
+      </form>
+</div>
+
+
+</body>
+</html> 
