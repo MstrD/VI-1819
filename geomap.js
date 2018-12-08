@@ -37,4 +37,11 @@ function geomap() {
                     .classed("active", false);
             });*/
     });
+    d3.json("new_cities.geojson").then(function(gj) {
+        return svg.selectAll("path")
+            .data(gj.features)
+            .enter()
+            .append("path")
+            .attr('d', path);
+    });
 }

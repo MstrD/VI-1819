@@ -2,8 +2,8 @@ import json
 import os
 from copy import deepcopy
 
-fr = open("actors_wins_nominees_years.json", "r", encoding="utf-8")
-fw = open("final_results.json", "w", encoding="utf-8")
+fr = open("../actors_wins_nominees_years.json", "r", encoding="utf-8")
+fw = open("../final_results.json", "w", encoding="utf-8")
 
 raw_json = "".join(line.strip("\n") for line in fr)
 parsed_json = json.loads(raw_json)
