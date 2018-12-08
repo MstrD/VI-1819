@@ -7,7 +7,7 @@ function geomap() {
     };
 
     var width = 700 - margin.left - margin.right,
-        height = 290 - margin.top - margin.bottom;
+        height = 300 - margin.top - margin.bottom;
 
     var svg = d3.select("#geomap").append("svg")
         .attr("width", width)
@@ -16,7 +16,7 @@ function geomap() {
         .attr("translate", "(0," + height + ")");
 
     var projection = d3.geoMercator()
-        .scale(80)
+        .scale(100)
         .translate([width/2, height/2 + 70]);
 
     var path = d3.geoPath()
@@ -37,11 +37,15 @@ function geomap() {
                     .classed("active", false);
             });*/
     });
+
     d3.json("new_cities.geojson").then(function(gj) {
-        return svg.selectAll("path")
-            .data(gj.features)
-            .enter()
-            .append("path")
-            .attr('d', path);
+        svg.append("g")
+            .selectAll("g")
+            .data(gj.features).enter()
+            .append("g")
+            .attr("transform", function (d) { return "translate(" + projection(d.geometry.coordinates[0][0]) + ")"; })
+            .append("circle")
+            .attr("r", 1.25)
+            .attr("fill", "rgb(122, 122, 82)");
     });
 }
