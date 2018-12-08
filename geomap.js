@@ -7,7 +7,8 @@ function geomap() {
     };
 
     var width = 700 - margin.left - margin.right,
-        height = 300 - margin.top - margin.bottom;
+        height = 300 - margin.top - margin.bottom,
+        centered;
 
     var svg = d3.select("#geomap").append("svg")
         .attr("width", width)
@@ -27,7 +28,8 @@ function geomap() {
             .data(gj.features)
             .enter()
             .append("path")
-            .attr('d', path);
+            .attr('d', path)
+            .on("click", clicked);
             /*.on("mouseover", function(d) {
                 d3.select(this)
                     .classed("active", true);
@@ -45,7 +47,34 @@ function geomap() {
             .append("g")
             .attr("transform", function (d) { return "translate(" + projection(d.geometry.coordinates[0][0]) + ")"; })
             .append("circle")
-            .attr("r", 1.25)
-            .attr("fill", "rgb(122, 122, 82)");
+            .attr("r", 2)
+            .attr("fill", "rgb(66, 134, 244)")
+            .on('click', clicked);
     });
+
+    function clicked(d) {
+        var x, y, k;
+      
+        if (d && centered !== d) {
+          var centroid = path.centroid(d);
+          console.log(centroid);
+          x = centroid[0];
+          y = centroid[1];
+          k = 2;
+          centered = d;
+        } else {
+          x = width / 2;
+          y = height / 2 + 70;
+          k = 1;
+          centered = null;
+        }
+      
+        svg.selectAll("path")
+            .classed("active", centered && function(d) { return d === centered; });
+      
+        svg.transition()
+            .duration(750)
+            .attr("transform", "translate(" + (width / 2 + 150) + "," + (height / 2 + 80) + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
+            .style("stroke-width", 1.5 / k + "px");
+      }
 }
