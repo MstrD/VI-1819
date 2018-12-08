@@ -49,7 +49,21 @@ function geomap() {
             .append("circle")
             .attr("r", 2)
             .attr("fill", "rgb(66, 134, 244)")
-            .on('click', clicked);
+            .on('click', clicked)
+            // mouse events
+            .on("mouseenter", function(d) {
+                tooltip.style("display", null);
+            })
+            .on("mouseleave", function() {
+                tooltip.style("display", "none");
+            })
+            .on("mousemove", function(d, i) {
+                tooltip.style("display", null);
+                var xPosition = d3.mouse(this)[0] + 550;
+                var yPosition = d3.mouse(this)[1] + 150;
+                tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
+                tooltip.select("text").text(d.properties.NAME);
+            })
     });
 
     function clicked(d) {
@@ -57,14 +71,13 @@ function geomap() {
       
         if (d && centered !== d) {
           var centroid = path.centroid(d);
-          console.log(centroid);
           x = centroid[0];
           y = centroid[1];
           k = 2;
           centered = d;
         } else {
-          x = width / 2;
-          y = height / 2 + 70;
+          x = width / 2 + 150;
+          y = height / 2 + 80;
           k = 1;
           centered = null;
         }
@@ -77,4 +90,23 @@ function geomap() {
             .attr("transform", "translate(" + (width / 2 + 150) + "," + (height / 2 + 80) + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
             .style("stroke-width", 1.5 / k + "px");
       }
+
+    // Prep the tooltip bits, initial display is hidden
+    var tooltip = svg.append("g")
+    .attr("class", "tooltip")
+    .style("display", "none");
+        
+    tooltip.append("rect")
+    .attr("width", 100)
+    .attr("height", 20)
+    .attr("fill", "white")
+    .style("opacity", 0.5);
+
+    tooltip.append("text")
+    .attr("x", 50)
+    .attr("dy", "1.2em")
+    .style("text-anchor", "middle")
+    .style("text-align", "center")
+    .attr("font-size", "12px")
+    .attr("font-weight", "bold");
 }
