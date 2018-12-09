@@ -1,16 +1,17 @@
-var heatmap_full_win, heatmap_full_nominee, heatmap_win, heatmap_nominee, dataNomineeWithAll, dataWinWithAll, current_heatmap, current_heatmap_data, orig_heatmap_win, orig_heatmap_nom;
+//dados iniciais
+var heatmap_full_win, heatmap_full_nominee;
+//10 melhores atores (so nome)
+var heatmap_win, heatmap_nominee;
+// 10 melhores com linhas todos os anos
+var dataNomineeWithAll, dataWinWithAll;
+//qual e o atual
+var current_heatmap, current_heatmap_data;
+//original com tudo tudo
+var orig_heatmap_win, orig_heatmap_nom;
 var firstyear = 1949, lastyear = 2017, rangeChanged = false;
 
-/*d3.json("actors_nomenies_wins_ratio_place_of_birth_counter.json").then(function(data) {
-    data.splice(0, 1);
-    data.sort(function(a, b) {
-        return b.B - a.B;
-    });
-    data = data.slice(0, 10);
-    console.log(data);
-    heatmap(data);
-})*/
 
+//limita a "data" com os anos selecionados no form
 function myFirstSlice(data, limit, firstyear, lastyear) {
     var act = 0;
     var namesRead = [];
@@ -32,6 +33,97 @@ function myFirstSlice(data, limit, firstyear, lastyear) {
     return dataFinal;
 }
 
+
+function SelecionaAnos(data, firstyear, lastyear) {
+    var dataFinal = [];
+	//percorre tudo fica com linhas so dos anos certos
+    for (var i = 0; i < data.length; i++) {
+        if (firstyear <= data[i].year && data[i].year <= lastyear)
+            dataFinal.push(data[i]); 
+    }
+    return dataFinal;
+}
+
+function RecontaWinsNominees(data, firstyear, lastyear){
+	var i = 0;
+	for(i; i< data.length; i++){
+		//conta wins e nominees
+		var wins = 0; 
+		var nominees = 0;
+		console.log(data[i].year);
+		//tem de ser um while a verificar o ano...
+		var j=0;
+		var linhas = 0;
+		var nominee = data[i].nominee;
+		console.log(i);
+		while(i+j< data.length && data[i+j].year <= lastyear && data[i+j].nominee == nominee){
+			if (data[i+j].winner == 1)
+				wins++;
+			else if (data[i+j].winner == 0)
+				nominees++;
+			else ;
+			linhas++;
+			j++;
+			
+		}
+		//atualiza este valor em todas as linhas
+		for(var y=0; y < linhas; y++ ){
+			data[i+y].wins = wins;
+			data[i+y].nominees = nominees;
+		}
+		i = i + linhas-1; //proxima pessoa
+	}
+	
+	return data;
+}
+
+function CortaLinhas(data, limit){
+	var act = 0;
+    var namesRead = [];
+    var dataFinal = [];
+    for (var i = 0; i < data.length; i++) {
+        if (namesRead.includes(data[i].nominee));
+        else {
+            act++;
+            namesRead.push(data[i].nominee);
+        }
+        if (namesRead.length == limit + 1) {
+            break;
+        }
+		dataFinal.push(data[i]);
+    }
+    return dataFinal;
+}
+
+function RangeAnosChanged(data, limit, firstyear, lastyear, order){
+
+	var data_anos_selec = SelecionaAnos (data, firstyear, lastyear);
+	//atualiza data anterior com wins e nominees dess eintervalo
+
+	var data_reconta_wins_nominees = RecontaWinsNominees(data_anos_selec, firstyear, lastyear);
+	//ordena pelo pretendido
+
+	var data_new;
+	if (order == "wins"){
+		//ordenar por wins novas
+		data_new = data_reconta_wins_nominees.sort(function(a, b) {
+			return b.wins - a.wins;
+		});
+	}
+	else {
+		//ordenar por nominees novas
+		data_new = data_reconta_wins_nominees.sort(function(a, b) {
+			return b.nominees - a.nominees;
+		});
+	}
+	
+	//corta os x de limit no num e atores select
+	data_final = CortaLinhas(data_new, limit);
+	//depois passar este ao myslice para tirar os nomes...
+	return data_final;
+}
+
+//limita a data apenas em x elementos, da os nomes apenas (1 linha por cada)
 function mySlice(data, limit) {
     var act = 0;
     var namesRead = [];
@@ -54,18 +146,36 @@ function mySlice(data, limit) {
 d3.json("final_results.json").then(function(data) {
     heatmap_full_win = data;
     heatmap_full_nominee = JSON.parse(JSON.stringify(data));
+	
+	//wins
     heatmap_win = heatmap_full_win.sort(function(a, b) {
         return b.wins - a.wins;
     });
     orig_heatmap_win = heatmap_win;
-    dataWinWithAll = myFirstSlice(heatmap_win, 10, 1949, 2017);
-    heatmap_win = mySlice(heatmap_win, 10);
+	
+	//data final wins
+    //dataWinWithAll = myFirstSlice(heatmap_win, 10, 1949, 2017);
+	console.log("vou limitar os anos por 1949 e 2017 inicio - wins");
+    dataWinWithAll = RangeAnosChanged(orig_heatmap_win, 10, 1949, 2017, "wins");
+	//heatmap_win = mySlice(heatmap_win, 10);
+	console.log("vou limitar a 10 atores");
+	heatmap_win = mySlice(dataWinWithAll, 10);
+	
+	
+	//nominees
     heatmap_nominee = heatmap_full_nominee.sort(function(a, b) {
         return b.nominees - a.nominees;
     });
     orig_heatmap_nom = heatmap_nominee;
-    dataNomineeWithAll = myFirstSlice(heatmap_nominee, 10, 1949, 2017);
-    heatmap_nominee = mySlice(heatmap_nominee, 10);
+	
+	//data final nominees
+    //dataNomineeWithAll = myFirstSlice(heatmap_nominee, 10, 1949, 2017);
+	console.log("vou limitar os anos por 1949 e 2017 inicio - nominees");
+	dataNomineeWithAll = RangeAnosChanged(orig_heatmap_nom, 10, 1949, 2017, "nominees");
+    //heatmap_nominee = mySlice(heatmap_nominee, 10);
+	heatmap_nominee = mySlice(dataNomineeWithAll, 10);
+	
+	//comecamos com os nominees
     current_heatmap = heatmap_nominee;
     current_heatmap_data = dataNomineeWithAll;
     geomap();
@@ -75,30 +185,16 @@ d3.json("final_results.json").then(function(data) {
 function selectHeatMapData() {
     d3.select("#heatmap").selectAll("svg").remove();
     d3.select("#geomap").selectAll("svg").remove();
-    if (!rangeChanged) {
         if (document.getElementById("hm_nominees").checked) {
             current_heatmap = heatmap_nominee;
             current_heatmap_data = dataNomineeWithAll;
-            heatmap(heatmap_nominee, dataNomineeWithAll, firstyear, lastyear);
+            heatmap(current_heatmap, current_heatmap_data, firstyear, lastyear);
         }
         else {
             current_heatmap = heatmap_win;
             current_heatmap_data = dataWinWithAll;
-            heatmap(heatmap_win, dataWinWithAll, firstyear, lastyear);
+            heatmap(current_heatmap, current_heatmap_data, firstyear, lastyear);
         }
-    }
-    else {
-        if (document.getElementById("hm_nominees").checked) {
-            current_heatmap = heatmap_nominee;
-            current_heatmap_data = myFirstSlice(orig_heatmap_nom, 10, firstyear, lastyear);
-            heatmap(heatmap_nominee, current_heatmap_data, firstyear, lastyear);
-        }
-        else {
-            current_heatmap = heatmap_win;
-            current_heatmap_data = myFirstSlice(orig_heatmap_win, 10, firstyear, lastyear);
-            heatmap(heatmap_win, current_heatmap_data, firstyear, lastyear);
-        }
-    }
     geomap();
 }
 
@@ -109,28 +205,40 @@ function selectHeatMapRange() {
         if (myfirst < mylast) {
             firstyear = myfirst;
             lastyear = mylast;
-            if (document.getElementById("hm_nominees").checked)
-                myAllData = myFirstSlice(orig_heatmap_nom, 10, myfirst, mylast);
-            else
-                myAllData = myFirstSlice(orig_heatmap_win, 10, myfirst, mylast);
-            current_heatmap_data = myAllData;
-            rangeChanged = true;
+			//limitar aos anos selecionados a data de ambos 
+			//dataWinWithAll = myFirstSlice(orig_heatmap_win, 10, myfirst, mylast);
+			//dataNomineeWithAll = myFirstSlice(orig_heatmap_nom, 10, myfirst, mylast);
+			dataWinWithAll = RangeAnosChanged(orig_heatmap_win, 10, myfirst, mylast, "wins");
+			dataNomineeWithAll = RangeAnosChanged(orig_heatmap_nom, 10, myfirst, mylast, "nominees");
+			heatmap_win = mySlice(dataWinWithAll, 10);
+			heatmap_nominee = mySlice(dataNomineeWithAll, 10);
+			
+            if (document.getElementById("hm_nominees").checked){
+				current_heatmap_data = dataNomineeWithAll;
+				current_heatmap = heatmap_nominee;
+			}
+            else{
+				current_heatmap_data = dataWinWithAll;
+				current_heatmap = heatmap_win;
+			}
             d3.select("#heatmap").selectAll("svg").remove();
-            heatmap(current_heatmap, myAllData, myfirst, mylast);
+			heatmap(current_heatmap, current_heatmap_data, myfirst, mylast);
         }
     }
+	d3.select("#geomap").selectAll("svg").remove();
+	geomap();
 }
 
 function heatmap(data, dataWithAll, firstyear, lastyear) {
     var margin = {
-        top: 40,
+        top: 10,
         right: 0,
         bottom: 15,
-        left: 100
+        left: 130
     };
 
-    var width = 700 - margin.left - margin.right,
-        height = 250 - margin.top - margin.bottom;
+    var width = 750 - margin.left - margin.right,
+        height = 230 - margin.top - margin.bottom;
 
     var years = []
     for (var i = firstyear; i <= lastyear+1; i++) {
