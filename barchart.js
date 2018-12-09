@@ -82,7 +82,7 @@ d3.json("final_TL.json").then(function (data) {
 	wr = 350;
     barchart(win, layers1, wr);
     ratings(win,wl);
-    geomap();
+    geomap(true);
 	last_layer = layers1;
 	last_sort = win;
 });

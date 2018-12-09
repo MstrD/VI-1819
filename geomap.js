@@ -1,4 +1,12 @@
-function geomap() {
+function handleMap() {
+    d3.select("#geomap").selectAll("svg").remove();
+    if (document.getElementById("all_actors").checked)
+        geomap(true);
+    else
+        geomap(false);
+}
+
+function geomap(allActors) {
     var margin = {
         top: 15,
         right: 0,
@@ -39,32 +47,79 @@ function geomap() {
                     .classed("active", false);
             });*/
     });
-
-    d3.json("new_cities.geojson").then(function(gj) {
-        svg.append("g")
-            .selectAll("g")
-            .data(gj.features).enter()
-            .append("g")
-            .attr("transform", function (d) { return "translate(" + projection(d.geometry.coordinates[0][0]) + ")"; })
-            .append("circle")
-            .attr("r", 2)
-            .attr("fill", "rgb(66, 134, 244)")
-            .on('click', clicked)
-            // mouse events
-            .on("mouseenter", function(d) {
-                tooltip.style("display", null);
-            })
-            .on("mouseleave", function() {
-                tooltip.style("display", "none");
-            })
-            .on("mousemove", function(d, i) {
-                tooltip.style("display", null);
-                var xPosition = d3.mouse(this)[0] + 550;
-                var yPosition = d3.mouse(this)[1] + 150;
-                tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
-                tooltip.select("text").text(d.properties.NAME);
-            })
-    });
+    
+    if (allActors) {
+        d3.json("new_cities.geojson").then(function(gj) {
+            svg.append("g")
+                .selectAll("g")
+                .data(gj.features).enter()
+                .append("g")
+                .attr("transform", function (d) { return "translate(" + projection(d.geometry.coordinates[0][0]) + ")"; })
+                .append("circle")
+                .attr("r", 2)
+                .attr("fill", "rgb(66, 134, 244)")
+                .on('click', clicked)
+                // mouse events
+                .on("mouseenter", function(d) {
+                    tooltip.style("display", null);
+                })
+                .on("mouseleave", function() {
+                    tooltip.style("display", "none");
+                })
+                .on("mousemove", function(d, i) {
+                    tooltip.style("display", null);
+                    var xPosition = d3.mouse(this)[0] + 550;
+                    var yPosition = d3.mouse(this)[1] + 150;
+                    tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
+                    tooltip.select("text").text(d.properties.NAME);
+                })
+        });
+    }
+    else {
+        var myPlaces = [];
+        d3.json("actors_nomenies_wins_ratio_place_of_birth_counter.json").then(function(data) {
+            for (var i = 0; i < current_heatmap.length; i++) {
+                for (var j = 1; j < data.length; j++) {
+                    if (current_heatmap[i].nominee == data[j].A) {
+                        myPlaces.push(data[j].E);
+                    }
+                }
+            }
+        });
+        var myPlacesData = [];
+        d3.json("new_cities.geojson").then(function(gj) {
+            for (var i = 0; i < myPlaces.length; i++) {
+                for (var j = 0; j < gj.features.length; j++) {
+                    if (myPlaces[i] == gj.features[j].properties.NAME) {
+                        myPlacesData.push(gj.features[j]);
+                    }
+                }
+            }
+            svg.append("g")
+                .selectAll("g")
+                .data(myPlacesData).enter()
+                .append("g")
+                .attr("transform", function (d) { return "translate(" + projection(d.geometry.coordinates[0][0]) + ")"; })
+                .append("circle")
+                .attr("r", 2)
+                .attr("fill", "rgb(66, 134, 244)")
+                .on('click', clicked)
+                // mouse events
+                .on("mouseenter", function(d) {
+                    tooltip.style("display", null);
+                })
+                .on("mouseleave", function() {
+                    tooltip.style("display", "none");
+                })
+                .on("mousemove", function(d, i) {
+                    tooltip.style("display", null);
+                    var xPosition = d3.mouse(this)[0] + 550;
+                    var yPosition = d3.mouse(this)[1] + 150;
+                    tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
+                    tooltip.select("text").text(d.properties.NAME);
+                })
+        });
+    }
 
     function clicked(d) {
         var x, y, k;

@@ -32,7 +32,9 @@ h2 {
     display: flex;
     width: 500;
     align-items: center;
-	text-align:left;
+    text-align:left;
+    position: relative;
+    z-index: 3;
 }
 
 .hm_sel {
@@ -155,7 +157,7 @@ path.active {
     z-index: 1;
     top: 0;
     overflow-x: hidden;
-    padding-top: 20px;
+    padding-top: 5px;
     right: 0;
 	
 }
