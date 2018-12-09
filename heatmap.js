@@ -68,11 +68,13 @@ d3.json("final_results.json").then(function(data) {
     heatmap_nominee = mySlice(heatmap_nominee, 10);
     current_heatmap = heatmap_nominee;
     current_heatmap_data = dataNomineeWithAll;
+    geomap();
     heatmap(heatmap_nominee, dataNomineeWithAll, 1949, 2017);
 })
 
 function selectHeatMapData() {
     d3.select("#heatmap").selectAll("svg").remove();
+    d3.select("#geomap").selectAll("svg").remove();
     if (!rangeChanged) {
         if (document.getElementById("hm_nominees").checked) {
             current_heatmap = heatmap_nominee;
@@ -97,6 +99,7 @@ function selectHeatMapData() {
             heatmap(heatmap_win, current_heatmap_data, firstyear, lastyear);
         }
     }
+    geomap();
 }
 
 function selectHeatMapRange() {
