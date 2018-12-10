@@ -1,4 +1,3 @@
-
 var dataset2;
 var w = 600,
 	h = 300,
@@ -10,6 +9,16 @@ d3.json("networks_count_BL.json").then(function (data) {
 	
 	bubbleMap(data);
 });
+
+/*function mudarounao(){
+	console.log("network----",document.getElementById('network').value);
+	if (document.getElementsByClassName("circle")[0]){
+		console.log("Tenho que mudar");
+	}else{
+		
+		console.log("Não mudo");
+	}
+}*/
 
 function interpolateColor(color1, color2, factor) {
 		if (arguments.length < 3) { 
@@ -82,7 +91,7 @@ function bubbleMap(data){
 					21, 22, 23, 24, 25,26,27,28,29,30,31, 32, 33, 34, 35,36,37,38,39,40];*/
 	
 	//trollar the background ball
-	colorRange.unshift("#000000");
+	colorRange.unshift("#1c1f24");
 	var color = d3.scaleLinear().range(colorRange).domain(pos);
 	
 	var bubble = d3.pack(full)
@@ -92,8 +101,8 @@ function bubbleMap(data){
 	
 	var svg = d3.select("#mind")
 		.append("svg")
-		.attr("width", w)
-		.attr("height", h)
+		.attr("width", diameter)
+		.attr("height", diameter)
 		.attr("class", "bubble");
 
 	var nodes = d3.hierarchy(full)
@@ -116,7 +125,8 @@ function bubbleMap(data){
 		.text(function(d) {
 			return d.A;
 		});
-
+		
+//filter(function(d){ return d.parent; }) 
 	node.append("circle")
 		.attr("r", function(d) {
 			return d.r;
@@ -188,91 +198,9 @@ function bubbleMap(data){
 		//meter aqui funcao para mudar o grafico la em cima
 	})
 	
-	/*node.append("stop")
-		.attr("offset", "0%")
-		.attr("stop-color", color(1));
-	node.append("stop")
-		.attr("offset", "5%")
-		.attr("stop-color", color(2));
-	node.append("stop")
-		.attr("offset", "10%")
-		.attr("stop-color", color(3));
-	node.append("stop")
-		.attr("offset", "15%")
-		.attr("stop-color", color(4));
-	node.append("stop")
-		.attr("offset", "20%")
-		.attr("stop-color", color(5));
-	node.append("stop")
-		.attr("offset", "25%")
-		.attr("stop-color", color(6));
-	node.append("stop")
-		.attr("offset", "30%")
-		.attr("stop-color", color(7));
-	node.append("stop")
-		.attr("offset", "35%")
-		.attr("stop-color", color(8));
-	node.append("stop")
-		.attr("offset", "40%")
-		.attr("stop-color", color(9));
-	node.append("stop")
-		.attr("offset", "45%")
-		.attr("stop-color", color(10));
-	node.append("stop")
-		.attr("offset", "50%")
-		.attr("stop-color", color(11));
-	node.append("stop")
-		.attr("offset", "55%")
-		.attr("stop-color", color(12));	
-	node.append("stop")
-		.attr("offset", "60%")
-		.attr("stop-color", color(13));
-	node.append("stop")
-		.attr("offset", "65%")
-		.attr("stop-color", color(14));
-	node.append("stop")
-		.attr("offset", "70%")
-		.attr("stop-color", color(15));
-	node.append("stop")
-		.attr("offset", "75%")
-		.attr("stop-color", color(16));
-	node.append("stop")
-		.attr("offset", "80%")
-		.attr("stop-color", color(17));
-	node.append("stop")
-		.attr("offset", "85%")
-		.attr("stop-color", color(18));
-	node.append("stop")
-		.attr("offset", "90%")
-		.attr("stop-color", color(19));
-	node.append("stop")
-		.attr("offset", "95%")
-		.attr("stop-color", color(20));
-	node.append("stop")
-		.attr("offset", "100%")
-		.attr("stop-color", color(21));	*/
-
-	 // Prep the tooltip bits, initial display is hidden
-    /*var tooltip = svg.append("g")
-    .attr("class", "tooltip")
-    .style("display", "none");
-        
-    tooltip.append("rect")
-    .attr("width", 60)
-    .attr("height", 20)
-    .attr("fill", "white")
-    .style("opacity", 0.5);
-
-    tooltip.append("text")
-    .attr("x", 30)
-    .attr("dy", "1.2em")
-    .style("text-anchor", "middle")
-    .attr("font-size", "12px")
-    .attr("font-weight", "bold");	*/
 }
 
 function series(network){
-	document.getElementById("network").value = network;
 	document.getElementById("mind").innerHTML = "";
 	var children = [];
 	d3.json("networks_series_BL.json").then(function (dataS) {
@@ -304,7 +232,7 @@ function series(network){
 					61, 62, 63, 64, 65,66,67,68,69,70, 71, 72, 73, 74, 75,76,77,78,79,80,
 					81,82, 83, 84, 85,86,87,88,89,90,91, 92, 93, 94, 95,96,97,98,99,100,101, 102, 103, 104, 105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120];
    //trollar the background ball
-	colorRange.unshift("#000000");
+	colorRange.unshift("#1c1f24");
 	var color = d3.scaleLinear().range(colorRange).domain(pos);
 	
 	var bubble2 = d3.pack(full2)
@@ -314,8 +242,8 @@ function series(network){
 	
 	var svg = d3.select("#mind")
 		.append("svg")
-		.attr("width", w)
-		.attr("height", h)
+		.attr("width", diameter)
+		.attr("height", diameter)
 		.attr("class", "bubble");
 		
 	//console.log("full2", full2);
@@ -340,7 +268,7 @@ function series(network){
 		.text(function(d) {
 			return d.A;
 		});
-
+//.filter(function(d){ return d.parent; }) 
 	serie.append("circle")
 		.attr("r", function(d) {
 			return d.r;
@@ -381,6 +309,7 @@ function series(network){
 				.style("cursor", "default");
 		});
 		
+	document.getElementById("network").value = network;
 	serie.on("mouseenter", function(d) {
 			//tooltip.style("display", null);
 			d3.select(this)
@@ -416,23 +345,6 @@ function series(network){
 		//series(d.data.A);
 		
 	})
-	 // Prep the tooltip bits, initial display is hidden
-    /*var tooltip = svg.append("g")
-		.attr("class", "tooltip")
-		.style("display", "none");
-        
-   /* tooltip.append("rect")
-		.attr("width", 60)
-		.attr("height", 20)
-		.attr("fill", "white")
-		.style("opacity", 0.5);
-
-    tooltip.append("text")
-		.attr("x", 30)
-		.attr("dy", "1.2em")
-		.style("text-anchor", "middle")
-		.attr("font-size", "12px")
-		.attr("font-weight", "bold");*/
 		
 	});
 		

@@ -130,7 +130,7 @@ function geomap() {
       
         svg.transition()
             .duration(750)
-            .attr("transform", "translate(" + (width / 2 + 150) + "," + (height / 2 + 80) + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
+            .attr("transform", "translate(" + (width / 2 + 150) + "," + (height / 2 + 80) + ")scale(" + k + ")translate(" + -(x-150) + "," + -(y-80) + ")")
             .style("stroke-width", 1.5 / k + "px");
       }
 
