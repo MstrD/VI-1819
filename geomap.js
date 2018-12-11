@@ -119,8 +119,8 @@ function geomap() {
           k = 2;
           centered = d;
         } else {
-          x = width / 2 + 150;
-          y = height / 2 + 80;
+          x = width / 2 + 300;
+          y = height / 2 + 160;
           k = 1;
           centered = null;
         }
