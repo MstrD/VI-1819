@@ -468,7 +468,8 @@ function barchart(data, layers, w) {
         .padding(0.2)
         .domain(data.map(function (d) {
             return d.A;
-        }));
+        }))
+		;
 
     //make y axis to show bar names
     var yAxis = d3.axisLeft(y)
@@ -536,6 +537,13 @@ function barchart(data, layers, w) {
         tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
         tooltip.select("text").text(d[1]-d[0]);
     })
+	.on('click', function(d, i) {
+			//limitar o heatmap
+		reduceHeatmap(d.data.A);				
+		//document.getElementById("show").value = d.data.A;
+		
+	})
+	
 
     // Prep the tooltip bits, initial display is hidden
     var tooltip = svg.append("g")
@@ -665,4 +673,11 @@ function ratings(data, w) {
         tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
         tooltip.select("text").text(parseFloat(d.I).toFixed(1));
     })
+	
+	bars.on('click', function(d, i) {
+			//limitar o heatmap
+		reduceHeatmap(d.A);				
+		//document.getElementById("show").value = d.data.A;
+		
+	})
 }
