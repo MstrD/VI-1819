@@ -503,7 +503,6 @@ function barchart(data, layers, w) {
         .on("click", function(d) {
             var actual = this;
             if (!selected) {
-                console.log("entrei no if");
                 d3.select(".axis").selectAll(".tick")
                 .filter(() => d3.select(this) !== actual)
                 .transition()
@@ -517,7 +516,6 @@ function barchart(data, layers, w) {
                 selected = true;
             }
             else {
-                console.log("entrei no else");
                 d3.select(".axis").selectAll(".tick")
                 .filter(() => d3.select(this) !== actual)
                 .transition()
@@ -569,12 +567,14 @@ function barchart(data, layers, w) {
         tooltip.style("display", null);
         d3.select(this)
             .transition(100)
-            .style("opacity", 0.3);
+            .style("opacity", 0.3)
+            .style("cursor", "pointer");
     })
     .on("mouseleave", function() {
         d3.select(this)
             .transition(100)
-            .style("opacity", 1);
+            .style("opacity", 1)
+            .style("cursor", "context-menu");
         tooltip.style("display", "none");
     })
     .on("mousemove", function(d, i) {
@@ -587,7 +587,40 @@ function barchart(data, layers, w) {
         tooltip.select("text").text(d[1]-d[0]);
     })
 	.on('click', function(d, i) {
-            //limitar o heatmap
+        var actual = d3.select(this)._groups[0][0].outerHTML;
+        var index; 
+        var all = svg.selectAll("rect");
+        for (var i = 0; i < all._groups[0].length; i++) {
+            if (all._groups[0][i].outerHTML === actual) { index = i % data.length; break; }
+        }
+        console.log(index);
+        if (!selected) {
+            d3.select(".axis").selectAll(".tick")
+            .filter((d, i) => i !== index)
+            .transition()
+            .duration(400)
+            .style("opacity", 0.3);
+            d3.select(".axis").selectAll(".tick")
+            .filter((d, i) => i === index)
+            .transition()
+            .duration(400)
+            .style("color", "#f3ce13")
+            .style("cursor", "pointer");
+            selected = true;
+        }
+        else {
+            d3.select(".axis").selectAll(".tick")
+            .filter((d, i) => i !== index)
+            .transition()
+            .duration(400)
+            .style("opacity", 1.0);
+            d3.select(".axis").selectAll(".tick")
+            .filter((d, i) => i === index)
+            .transition()
+            .duration(400)
+            .style("color", "white");
+            selected = false;
+        }
 		reduceHeatmap(d.data.A);				
 		//document.getElementById("show").value = d.data.A;
 		
@@ -625,6 +658,8 @@ function ratings(data, w) {
 
     var width = w - margin.left - margin.right,
         height = 250 - margin.top - margin.bottom;
+
+    var selected = false;
 
     var svg = d3.select("#barchart").append("svg")
         .attr("width", width + margin.left + margin.right)
@@ -703,13 +738,15 @@ function ratings(data, w) {
         tooltip.style("display", null);
         d3.select(this)
             .transition(100)
-            .style("opacity", 0.3);
+            .style("opacity", 0.3)
+            .style("cursor", "pointer");
     });
 
     bars.on("mouseleave", function() {
         d3.select(this)
             .transition(100)
-            .style("opacity", 1);
+            .style("opacity", 1)
+            .style("cursor", "context-menu");
         tooltip.style("display", "none");
     });
 
@@ -723,10 +760,41 @@ function ratings(data, w) {
         tooltip.select("text").text(parseFloat(d.I).toFixed(1));
     })
 	
-	bars.on('click', function(d, i) {
-			//limitar o heatmap
-		reduceHeatmap(d.A);				
-		//document.getElementById("show").value = d.data.A;
+	bars.on('click', function(d) {
+        var actual = d3.select(this)._groups[0][0].innerHTML;
+        var index; 
+        var all = svg.selectAll("rect");
+        for (var i = 0; i < all._groups[0].length; i++) {
+            if (all._groups[0][i].outerHTML === actual) { index = i; break; }
+        }
+        if (!selected) {
+            d3.select(".axis").selectAll(".tick")
+            .filter((d, i) => i !== index)
+            .transition()
+            .duration(400)
+            .style("opacity", 0.3);
+            d3.select(".axis").selectAll(".tick")
+            .filter((d, i) => i === index)
+            .transition()
+            .duration(400)
+            .style("color", "#f3ce13")
+            .style("cursor", "pointer");
+            selected = true;
+        }
+        else {
+            d3.select(".axis").selectAll(".tick")
+            .filter((d, i) => i !== index)
+            .transition()
+            .duration(400)
+            .style("opacity", 1.0);
+            d3.select(".axis").selectAll(".tick")
+            .filter((d, i) => i === index)
+            .transition()
+            .duration(400)
+            .style("color", "white");
+            selected = false;
+        }
+		reduceHeatmap(d.A);
 		
 	})
 }
