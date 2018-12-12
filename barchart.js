@@ -457,7 +457,10 @@ function barchart(data, layers, w) {
 		if(parseInt(data[i].H) > max) {
 			max = parseInt(data[i].H);
 		}
-	}
+    }
+    
+    // flag to perform a click transition over a TV series
+    var selected = false;
 		
     var x = d3.scaleLinear()
         .range([0, width])
@@ -494,7 +497,39 @@ function barchart(data, layers, w) {
             d3.select(this)
             .transition()
             .duration(400)
-            .style("color", "white");
+            .style("color", "white")
+            .style("cursor", "context-menu");
+        })
+        .on("click", function(d) {
+            var actual = this;
+            if (!selected) {
+                console.log("entrei no if");
+                d3.select(".axis").selectAll(".tick")
+                .filter(() => d3.select(this) !== actual)
+                .transition()
+                .duration(400)
+                .style("opacity", 0.3);
+                d3.select(this)
+                .transition()
+                .duration(400)
+                .style("color", "#f3ce13")
+                .style("cursor", "pointer");
+                selected = true;
+            }
+            else {
+                console.log("entrei no else");
+                d3.select(".axis").selectAll(".tick")
+                .filter(() => d3.select(this) !== actual)
+                .transition()
+                .duration(400)
+                .style("opacity", 1.0);
+                d3.select(this)
+                .transition()
+                .duration(400)
+                .style("color", "white");
+                selected = false;
+            }
+            reduceHeatmap(d);
         });
 
     var gx = svg.append("g")
@@ -552,7 +587,7 @@ function barchart(data, layers, w) {
         tooltip.select("text").text(d[1]-d[0]);
     })
 	.on('click', function(d, i) {
-			//limitar o heatmap
+            //limitar o heatmap
 		reduceHeatmap(d.data.A);				
 		//document.getElementById("show").value = d.data.A;
 		

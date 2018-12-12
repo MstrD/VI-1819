@@ -324,6 +324,12 @@ function heatmap(data, dataWithAll, firstyear, lastyear) {
         // name selection: text goes yellow
         .selectAll(".tick")
         .on("mouseenter", function() {
+            var actual = this;
+            d3.select(".hm_axis").selectAll(".tick")
+            .filter(() => d3.select(this) !== actual)
+            .transition()
+            .duration(400)
+            .style("opacity", 0.3);
             d3.select(this)
             .transition()
             .duration(400)
@@ -331,6 +337,12 @@ function heatmap(data, dataWithAll, firstyear, lastyear) {
             .style("cursor", "pointer");
         })
         .on("mouseleave", function() {
+            var actual = this;
+            d3.select(".hm_axis").selectAll(".tick")
+            .filter(() => d3.select(this) !== actual)
+            .transition()
+            .duration(400)
+            .style("opacity", 1.0);
             d3.select(this)
             .transition()
             .duration(400)
