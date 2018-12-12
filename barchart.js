@@ -468,8 +468,7 @@ function barchart(data, layers, w) {
         .padding(0.2)
         .domain(data.map(function (d) {
             return d.A;
-        }))
-		;
+        }));
 
     //make y axis to show bar names
     var yAxis = d3.axisLeft(y)
@@ -481,7 +480,22 @@ function barchart(data, layers, w) {
 
     var gy = svg.append("g")
         .attr("class", "y axis")
-        .call(yAxis);
+        .call(yAxis)
+        // name selection: text goes yellow
+        .selectAll(".tick")
+        .on("mouseenter", function() {
+            d3.select(this)
+            .transition()
+            .duration(400)
+            .style("color", "#f3ce13")
+            .style("cursor", "pointer");
+        })
+        .on("mouseleave", function() {
+            d3.select(this)
+            .transition()
+            .duration(400)
+            .style("color", "white");
+        });
 
     var gx = svg.append("g")
         .attr("transform", "translate(0," + (height - 7) + ")")

@@ -320,7 +320,22 @@ function heatmap(data, dataWithAll, firstyear, lastyear) {
 
     var gy = svg.append("g")
         .attr("class", "hm_axis")
-        .call(yAxis);
+        .call(yAxis)
+        // name selection: text goes yellow
+        .selectAll(".tick")
+        .on("mouseenter", function() {
+            d3.select(this)
+            .transition()
+            .duration(400)
+            .style("color", "#f3ce13")
+            .style("cursor", "pointer");
+        })
+        .on("mouseleave", function() {
+            d3.select(this)
+            .transition()
+            .duration(400)
+            .style("color", "white");
+        });
 
     var gx = svg.append("g")
         .attr("transform", "translate(0," + (height - 7) + ")")
