@@ -292,6 +292,8 @@ function heatmap(data, dataWithAll, firstyear, lastyear) {
     var gridSize = Math.floor(width / years.length),
         legendElementWidth = gridSize*2;
 
+    var selected = false;
+
     var svg = d3.select("#heatmap").append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
@@ -324,12 +326,6 @@ function heatmap(data, dataWithAll, firstyear, lastyear) {
         // name selection: text goes yellow
         .selectAll(".tick")
         .on("mouseenter", function() {
-            var actual = this;
-            d3.select(".hm_axis").selectAll(".tick")
-            .filter(() => d3.select(this) !== actual)
-            .transition()
-            .duration(400)
-            .style("opacity", 0.3);
             d3.select(this)
             .transition()
             .duration(400)
@@ -337,16 +333,55 @@ function heatmap(data, dataWithAll, firstyear, lastyear) {
             .style("cursor", "pointer");
         })
         .on("mouseleave", function() {
-            var actual = this;
-            d3.select(".hm_axis").selectAll(".tick")
-            .filter(() => d3.select(this) !== actual)
-            .transition()
-            .duration(400)
-            .style("opacity", 1.0);
             d3.select(this)
             .transition()
             .duration(400)
-            .style("color", "white");
+            .style("color", "white")
+            .style("cursor", "context-menu");
+        })
+        .on("click", function(d) {
+            var actual = d3.select(this);
+            var index; 
+            var all = svg.selectAll(".tick");
+            for (var i = 0; i < all._groups[0].length; i++) {
+                if (all._groups[0][i].innerHTML === actual._groups[0][0].innerHTML) { index = i; break; }
+            }
+            console.log(index);
+            if (!selected) {
+                console.log(d3.select("#geomap").select("svg").selectAll(".points").selectAll("circle"));
+                d3.select("#geomap").select("svg").selectAll(".points").selectAll("circle")
+                .filter((d) => d.properties.NAME === current_heatmap[index].PlaceOfBirth)
+                .transition()
+                .duration(1000)
+                .style("r", 8);
+                d3.select(".hm_axis").selectAll(".tick")
+                .filter(() => d3.select(this) !== actual)
+                .transition()
+                .duration(400)
+                .style("opacity", 0.3);
+                d3.select(this)
+                .transition()
+                .duration(400)
+                .style("color", "f3ce13");
+                selected = true;
+            }
+            else {
+                d3.select("#geomap").select("svg").selectAll(".points").selectAll("circle")
+                .filter((d, i) => d.properties.NAME === current_heatmap[index].PlaceOfBirth)
+                .transition()
+                .duration(1000)
+                .style("r", 4);
+                d3.select(".hm_axis").selectAll(".tick")
+                .filter(() => d3.select(this) !== actual)
+                .transition()
+                .duration(400)
+                .style("opacity", 1.0);
+                d3.select(this)
+                .transition()
+                .duration(400)
+                .style("color", "white");
+                selected = false;
+            }
         });
 
     var gx = svg.append("g")
