@@ -326,7 +326,7 @@ function handleSelect(){
 
 	if (checkBox.checked == true){
 		wl = 180;
-		wr = 350;
+		wr = 320;
 		document.getElementById("sort_rating").disabled = false;
 		document.getElementById("sort_rating").style.opacity = 1;
 		has_rate = true;
@@ -335,7 +335,7 @@ function handleSelect(){
 		document.getElementById("sort_rating").disabled = true;
 		document.getElementById("sort_rating").style.opacity = 0.2;
 		wl = 0;
-		wr = 530;
+		wr = 500;
 		has_rate = false;
 	}
 	document.getElementById("barchart").innerHTML = "";
