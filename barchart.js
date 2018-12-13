@@ -326,7 +326,7 @@ function handleSelect(){
 
 	if (checkBox.checked == true){
 		wl = 180;
-		wr = 320;
+		wr = 350;
 		document.getElementById("sort_rating").disabled = false;
 		document.getElementById("sort_rating").style.opacity = 1;
 		has_rate = true;
@@ -502,8 +502,44 @@ function barchart(data, layers, w) {
         })
         .on("click", function(d) {
             var actual = this;
-            if (!selected) {
-                d3.select(".axis").selectAll(".tick")
+			if (reduced == true && selected && d == selectedShow){
+				console.log("sai fora, volta tudo a white");
+				var meee = d3.select(".axis").selectAll(".tick").filter(() => d3.select(this) == actual);
+				console.log(meee);
+				d3.select(".axis").selectAll(".tick")
+                .filter(() => d3.select(this) == actual).transition()
+                .duration(400)
+                .style("opacity", 1.0);
+                d3.select(this)
+                .transition()
+                .duration(400)
+                .style("color", "white");
+				
+				//caso de sai fora volta tudo a white
+				d3.select(".axis").selectAll(".tick")
+                .transition()
+                .duration(400)
+                .style("opacity", 1.0);
+                d3.select(this)
+                .transition()
+                .duration(400)
+                .style("color", "white");
+                selected = false;
+			}
+			else {
+				//muda de serie selecionada - mete a white a nova
+				console.log("selecionei uma serie");
+				d3.select(".axis").selectAll(".tick")
+                .filter(() => d3.select(this) == actual).transition()
+                .duration(400)
+                .style("opacity", 1.0);
+                d3.select(this)
+                .transition()
+                .duration(400)
+                .style("color", "white");
+				
+				//outras ficam a semi
+				d3.select(".axis").selectAll(".tick")
                 .filter(() => d3.select(this) !== actual)
                 .transition()
                 .duration(400)
@@ -514,19 +550,7 @@ function barchart(data, layers, w) {
                 .style("color", "#f3ce13")
                 .style("cursor", "pointer");
                 selected = true;
-            }
-            else {
-                d3.select(".axis").selectAll(".tick")
-                .filter(() => d3.select(this) !== actual)
-                .transition()
-                .duration(400)
-                .style("opacity", 1.0);
-                d3.select(this)
-                .transition()
-                .duration(400)
-                .style("color", "white");
-                selected = false;
-            }
+			}
             reduceHeatmap(d);
         });
 
