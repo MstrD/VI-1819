@@ -143,15 +143,8 @@ h2 {
 }
 
 
-path {
-    fill: #ffffff;
-    fill-opacity: 0.8;
-    stroke: #111;
-    z-index: 4;
-}
-
-path.active {
-    fill: blue;
+.axis line {
+    fill: none;
 }
 
 
@@ -218,6 +211,11 @@ path.active {
     height: 400;
 	float: left;
 }
+#barchart path {
+    fill-opacity: 1;
+    stroke: #111;
+    z-index: 4;
+}
 .axis {
     font-size: 10pt;
     font-family: "roboto thin", sans-serif;
@@ -229,10 +227,8 @@ path.active {
 #heatmap{
 	margin-left:180px;
 }
-
 .hm_axis {
     fill: #ffffff;
-
     font-family: "roboto thin", sans-serif;
     font-size: 10pt;
 	font-weight: bold;
@@ -241,18 +237,45 @@ path.active {
 .a_wins{
 	font-size: 10pt;
 }
-
 .a_noms{
 	font-size: 10pt;
 }
-
-
+.a_noms path{
+	visibility: hidden;
+}
+#heatmap path {
+    fill-opacity: 1;
+    stroke: #111;
+    z-index: 4;
+	stroke-width: 2px;
+}
+#heatmap .axis path{
+	visibility: hidden;
+}
+.heatmap_subtitles{
+	font-family: "oswald", sans-serif;
+	font-size:10pt;
+	text-align: left;
+	margin-left: 312px;
+	z-index: 4;
+	margin-top: -20px;
+}
 
 #mind {
 	margin-left:50px;
 }
 
+
+
 #geomap{
 	margin-top: 10px;
 }
-
+#geomap path {
+    fill: #ffffff;
+    fill-opacity: 0.8;
+    stroke: #111;
+    z-index: 4;
+}
+#geomap path.active {
+    fill: blue;
+}

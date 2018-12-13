@@ -533,7 +533,7 @@ function barchart(data, layers, w) {
                 .transition()
                 .duration(400)
 				.style("opacity", 1.0)
-                .style("color", "white");
+                .style("color", "f3ce13");
 
 				
 

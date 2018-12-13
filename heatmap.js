@@ -10,6 +10,7 @@ var current_heatmap, current_heatmap_data;
 var orig_heatmap_win, orig_heatmap_nom;
 var firstyear = 1949, lastyear = 2017, reduced=false;
 var selectedShow = null;
+var current_actor = null;
 
 function reduceHeatmap(show){
 	//fazer verificacao se esta reduced ou nao para poder voltar atras
@@ -369,41 +370,51 @@ function heatmap(data, dataWithAll, firstyear, lastyear) {
                 if (all._groups[0][i].innerHTML === actual._groups[0][0].innerHTML) { index = i; break; }
             }
             console.log(index);
-            if (!selected) {
+            if (selected && d == current_actor) {
+				d3.select("#geomap").select("svg").selectAll(".points").selectAll("circle")
+                .filter((d, i) => d.properties.NAME === current_heatmap[index].PlaceOfBirth)
+                .transition()
+                .duration(1000)
+                .style("r", 4);
+				
+                d3.select(".hm_axis").selectAll(".tick")
+                .filter(() => d3.select(this) !== actual)
+                .transition()
+                .duration(400)
+                .style("opacity", 1.0);
+				
+                d3.select(this)
+                .transition()
+                .duration(400)
+				.style("opacity", 1.0)
+                .style("color", "white");
+				
+                selected = false;
+			}
+			else{
                 console.log(d3.select("#geomap").select("svg").selectAll(".points").selectAll("circle"));
                 d3.select("#geomap").select("svg").selectAll(".points").selectAll("circle")
                 .filter((d) => d.properties.NAME === current_heatmap[index].PlaceOfBirth)
                 .transition()
                 .duration(1000)
                 .style("r", 8);
+				
                 d3.select(".hm_axis").selectAll(".tick")
                 .filter(() => d3.select(this) !== actual)
                 .transition()
                 .duration(400)
                 .style("opacity", 0.3);
+				
                 d3.select(this)
                 .transition()
                 .duration(400)
+				.style("opacity", 1.0)
                 .style("color", "f3ce13");
-                selected = true;
+                
+				selected = true;
+				current_actor = d;
             }
-            else {
-                d3.select("#geomap").select("svg").selectAll(".points").selectAll("circle")
-                .filter((d, i) => d.properties.NAME === current_heatmap[index].PlaceOfBirth)
-                .transition()
-                .duration(1000)
-                .style("r", 4);
-                d3.select(".hm_axis").selectAll(".tick")
-                .filter(() => d3.select(this) !== actual)
-                .transition()
-                .duration(400)
-                .style("opacity", 1.0);
-                d3.select(this)
-                .transition()
-                .duration(400)
-                .style("color", "white");
-                selected = false;
-            }
+
         });
 
     var gx = svg.append("g")
