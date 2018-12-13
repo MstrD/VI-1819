@@ -77,11 +77,7 @@ h2 {
 	margin-left: 200px;
 }
 
-#barchart {
-    width: 700;
-    height: 400;
-	float: left;
-}
+
 
 .bc_sel {
     font-size: 10pt;
@@ -108,12 +104,7 @@ h2 {
     opacity: 0.9;
 }
 
-.axis {
-    font-size: 13px;
-    font-family: "roboto thin", sans-serif;
-    font-weight: bold;
-    text-align: right;
-}
+
 
 .axis path,
 .axis line {
@@ -163,13 +154,7 @@ path.active {
     fill: blue;
 }
 
-.hm_axis {
-    fill: #ffffff;
-    fill-opacity: 0.8;
-    font-family: "roboto thin", sans-serif;
-    font-size: 9pt;
-	text-align:left;
-}
+
 
 .hm_stuff {
     stroke: #E6E6E6;
@@ -217,19 +202,51 @@ path.active {
 	border: 2px dotted grey;
 }
 .RB {
-	height: 280px;
+	height: 290px;
     width: 950px;
     position: fixed;
     z-index: 1;
-    top: 340px;
+    top: 335px;
     overflow-x: hidden;
     right: 0; 
 	border: 2px dotted grey;
 }
 
+
+#barchart {
+    width: 700;
+    height: 400;
+	float: left;
+}
+.axis {
+    font-size: 10pt;
+    font-family: "roboto thin", sans-serif;
+    font-weight: bold;
+    text-align: right;
+}
+
+
 #heatmap{
 	margin-left:180px;
 }
+
+.hm_axis {
+    fill: #ffffff;
+
+    font-family: "roboto thin", sans-serif;
+    font-size: 10pt;
+	font-weight: bold;
+	text-align:left;
+}
+.a_wins{
+	font-size: 10pt;
+}
+
+.a_noms{
+	font-size: 10pt;
+}
+
+
 
 #mind {
 	margin-left:50px;
@@ -238,3 +255,4 @@ path.active {
 #geomap{
 	margin-top: 10px;
 }
+

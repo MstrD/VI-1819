@@ -272,14 +272,14 @@ function selectHeatMapRange() {
 
 function heatmap(data, dataWithAll, firstyear, lastyear) {
     var margin = {
-        top: 10,
+        top: 5,
         right: 0,
         bottom: 15,
         left: 130
     };
 
     var width = 750 - margin.left - margin.right,
-        height = 230 - margin.top - margin.bottom;
+        height = 250 - margin.top - margin.bottom;
 
     var years = []
     for (var i = firstyear; i <= lastyear+1; i++) {
@@ -412,7 +412,7 @@ function heatmap(data, dataWithAll, firstyear, lastyear) {
         .call(xAxis);
 
     var gy1 = svg.append("g")
-        .attr("transform", "translate(" + 20 + ", 0)")
+        .attr("transform", "translate(" + 15 + ", 0)")
         .attr("class", "a_wins")
         .call(yAxis1);
         
@@ -422,7 +422,7 @@ function heatmap(data, dataWithAll, firstyear, lastyear) {
         .text((d) => d.substr(1));
 
     var gy2 = svg.append("g")
-        .attr("transform", "translate(" + 40 + ", 0)")
+        .attr("transform", "translate(" + 35 + ", 0)")
         .attr("class", "a_noms")
         .call(yAxis2);
 
