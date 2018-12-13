@@ -559,7 +559,7 @@ function barchart(data, layers, w) {
         .attr("class", "x axis")
         .call(xAxis);
 
-    var colors = ["#996600", "#cca300", "#adad85", "#7a7a52"];
+    var colors = ["#996600", "#cca300", "#7a7a52", "#adad85"];
     
     var bars = svg.selectAll(".bar")
         .data(layers)

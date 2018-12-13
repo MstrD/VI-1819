@@ -37,25 +37,50 @@ h2 {
 }
 
 .selection{
-	margin-left: 540px;
 	z-index:2;
-	width: 150px;
 	text-align: center;
 	border: 2px solid lightgrey;
 	border-radius: 5px;
 	font-size: 10pt;
 	padding: 5px;
+	margin-top: 10px;
+}
+
+#select_series{
+	margin-left: 520px;
+	width: 150px;
+}
+
+#select_actors{
+	
+	width: 150px;
+	height: 245px;
+	text-align: left;
+	left: 10px;
+	float:left;
+	margin-left: 10px;
+
+}
+
+.date_form{
+	margin-bottom: 10px;
+	font-family: 'oswald', sans-serif;
+	width: 100px;
+	margin-left: 20px;
 }
 
 .section_title{
 	font-family: "oswald", sans-serif;
 	text-align: center;
 	margin-top: 10px;
+	float: left;
+	margin-left: 200px;
 }
 
 #barchart {
     width: 700;
     height: 400;
+	float: left;
 }
 
 .bc_sel {
@@ -76,15 +101,7 @@ h2 {
 	text-align: left;
 }
 
-.date_form {
-    font-size: 10pt;
-    font-family: 'roboto', sans-serif;
-    display: block;
-    width: 500;
-    align-items: center;
-	text-align: center;
-	margin-left: 70px;
-}
+
 
 .bar_rating {
     fill: #f3ce13; /* IMDb logo color */
@@ -134,9 +151,6 @@ h2 {
 	z-index: 3;
 }
 
-#mind {
-	margin-left:100px;
-}
 
 path {
     fill: #ffffff;
@@ -170,15 +184,15 @@ path.active {
 }
 
 .LT {
-	height: 350px;
-    width: 550px;
+	height: 327px;
+    width: 695px;
     position: fixed;
     z-index: 1;
-    top: 0;
+    top: 5px;
+	left: 5px;
     overflow-x: hidden;
-    padding-top: 5px;
 	padding-left: 10px;
-    left: 20px;
+	border: 2px dotted grey;
 }
 .RT {
 	height: 325px;
@@ -193,22 +207,30 @@ path.active {
 }
 .LB {
 	height: 310px;
-    width: 40%;
+    width: 400px;
     position: fixed;
     z-index: 1;
-    bottom: 0;
+    top: 320px;
+	left: 5px;
     overflow-x: hidden;
-    padding-top: 20px;
-    left: 0;
+    padding-top: 10px;
+	border: 2px dotted grey;
 }
 .RB {
-	height: 310px;
-    width: 780px;
+	height: 280px;
+    width: 950px;
     position: fixed;
     z-index: 1;
-    bottom: 0;
+    top: 340px;
     overflow-x: hidden;
-    padding-top: 20px;
     right: 0; 
+	border: 2px dotted grey;
 }
 
+#heatmap{
+	margin-left:180px;
+}
+
+#mind {
+	margin-left:50px;
+}
