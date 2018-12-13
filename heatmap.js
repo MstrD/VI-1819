@@ -301,7 +301,7 @@ function heatmap(data, dataWithAll, firstyear, lastyear) {
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     var x = d3.scaleLinear()
-        .range([0, width])
+        .range([40, width])
         .domain([years[0], years[years.length - 1]]);
 
     var y = d3.scaleBand()
@@ -311,8 +311,30 @@ function heatmap(data, dataWithAll, firstyear, lastyear) {
             return d.nominee;
         }));
 
+    var y1 = d3.scaleBand()
+        .rangeRound([0, height])
+        .padding(0.2)
+        .domain(data.map(function (d, i) {
+            return String(i) + String(d.wins);
+        }));
+
+    var y2 = d3.scaleBand()
+        .rangeRound([0, height])
+        .padding(0.2)
+        .domain(data.map(function (d, i) {
+            return String(i) + String(d.nominees);
+        }));
+
     //make y axis to show bar names
     var yAxis = d3.axisLeft(y)
+        //no tick marks
+        .tickSize(0);
+
+    var yAxis1 = d3.axisLeft(y1)
+        //no tick marks
+        .tickSize(0);
+
+    var yAxis2 = d3.axisLeft(y2)
         //no tick marks
         .tickSize(0);
 
@@ -388,6 +410,26 @@ function heatmap(data, dataWithAll, firstyear, lastyear) {
         .attr("transform", "translate(0," + (height - 7) + ")")
         .attr("class", "axis")
         .call(xAxis);
+
+    var gy1 = svg.append("g")
+        .attr("transform", "translate(" + 20 + ", 0)")
+        .attr("class", "a_wins")
+        .call(yAxis1);
+        
+    d3.select(".a_wins")
+        .selectAll(".tick")
+        .selectAll("text")
+        .text((d) => d.substr(1));
+
+    var gy2 = svg.append("g")
+        .attr("transform", "translate(" + 40 + ", 0)")
+        .attr("class", "a_noms")
+        .call(yAxis2);
+
+    d3.select(".a_noms")
+        .selectAll(".tick")
+        .selectAll("text")
+        .text((d) => d.substr(1));
 
     const cards = svg.selectAll(".hour")
         .data(dataWithAll, (d) => d);
