@@ -6,8 +6,8 @@ function geomap() {
         left: 30
     };
 
-    var width = 700 - margin.left - margin.right,
-        height = 300 - margin.top - margin.bottom,
+    var width = 750 - margin.left - margin.right,
+        height = 250 - margin.top - margin.bottom,
         centered;
 
     var svg = d3.select("#geomap").append("svg")
@@ -17,8 +17,8 @@ function geomap() {
         .attr("translate", "(0," + height + ")");
 
     var projection = d3.geoMercator()
-        .scale(100)
-        .translate([width/2, height/2 + 70]);
+        .scale(90)
+        .translate([width/2 - 40, height/2 + 60]);
 
     var path = d3.geoPath()
         .projection(projection);

@@ -141,7 +141,7 @@ h2 {
     right: 110px;
 	z-index: 3;
 	text-shadow: 2px 2px 4px #000000;
-	
+	visibility: hidden;
 }
 #statue{
 	position: fixed;
@@ -195,15 +195,15 @@ path.active {
 	border: 2px dotted grey;
 }
 .RT {
-	height: 325px;
-    width: 660px;
+	height: 327px;
+    width: 640px;
     position: fixed;
     z-index: 1;
-    top: 0;
+    top: 5px;
     overflow-x: hidden;
-    padding-top: 5px;
     right: 0;
-	
+	border: 2px dotted grey;
+	padding-left: 10px;
 }
 .LB {
 	height: 310px;
@@ -233,4 +233,8 @@ path.active {
 
 #mind {
 	margin-left:50px;
+}
+
+#geomap{
+	margin-top: 10px;
 }
