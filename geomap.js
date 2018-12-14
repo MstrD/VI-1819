@@ -70,10 +70,10 @@ function geomap() {
             .append("circle")
             .attr("r", 2)
             .attr("fill", "rgb(66, 134, 244)")
-            .on('click', clicked)
+            .on('click', clicked_city)
             // mouse events
 			//depois sai para dar origem a secao
-            .on("mouseenter", function(d) {
+            /*.on("mouseenter", function(d) {
                 tooltip.style("display", null);
             })
             .on("mouseleave", function() {
@@ -85,7 +85,7 @@ function geomap() {
                 var yPosition = d3.mouse(this)[1] + 150;
                 tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
                 tooltip.select("text").text(d.properties.NAME);
-            });
+            })*/;
 
         svg.append("g")
             .selectAll("g")
@@ -96,9 +96,9 @@ function geomap() {
             .append("circle")
             .attr("r", 4)
             .attr("fill", "#cca300")
-            .on('click', clicked)
+            .on('click', clicked_city)
             // mouse events
-            .on("mouseenter", function(d) {
+            /*.on("mouseenter", function(d) {
                 tooltip.style("display", null);
             })
             .on("mouseleave", function() {
@@ -110,12 +110,12 @@ function geomap() {
                 var yPosition = d3.mouse(this)[1] + 150;
                 tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
                 tooltip.select("text").text(d.properties.NAME);
-            })
+            })*/
     });
 
     function clicked(d) {
         var x, y, k;
-      
+		document.getElementById("select_city").style.display= 'none' ;
         if (d && centered !== d) {
           var centroid = path.centroid(d);
           x = centroid[0];
@@ -139,9 +139,35 @@ function geomap() {
             .attr("transform", "translate(" + (width / 2 - x) + "," + (height / 2 - y) + ")scale(" + k + ")")
             .style("stroke-width", 1.5 / k + "px");
       }
-
+	
+	function clicked_city(d){
+		clicked(d);
+		var cityName = d.properties.NAME;
+		if (centered == d){
+			var dataWeWant = [];
+			d3.json("placeOfBirth_details.json").then(function (dataS){
+				dataS.splice(0, 1);
+				for (var i = 0; i < dataS.length; i++) {
+					if (dataS[i].A == cityName){ 
+						dataWeWant.push(dataS[i]);
+					}
+				}
+				console.log(dataWeWant);
+				document.getElementById("geo_city").innerHTML = dataWeWant[0].A;
+				document.getElementById("geo_nactors").innerHTML = dataWeWant[0].D;
+				document.getElementById("geo_wins").innerHTML = dataWeWant[0].B;
+				document.getElementById("geo_nominees").innerHTML = dataWeWant[0].C;
+				
+				document.getElementById("select_city").style.display= 'block' ;
+			});
+		}
+		else{
+			document.getElementById("select_city").style.display= 'none' ;
+		}
+	}
+	
     // Prep the tooltip bits, initial display is hidden
-    var tooltip = svg.append("g")
+    /*var tooltip = svg.append("g")
     .attr("class", "tooltip")
     .style("display", "none");
         
@@ -157,5 +183,6 @@ function geomap() {
     .style("text-anchor", "middle")
     .style("text-align", "center")
     .attr("font-size", "12px")
-    .attr("font-weight", "bold");
+    .attr("font-weight", "bold");*/
+	
 }

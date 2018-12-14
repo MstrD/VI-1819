@@ -78,7 +78,7 @@ d3.json("final_TL.json").then(function (data) {
     orig_layers2 = layers2;
     orig_layers3 = layers3;
 
-	wl = 180;
+	wl = 160;
 	wr = 350;
     barchart(win, layers1, wr);
     ratings(win,wl);
@@ -292,12 +292,12 @@ function handleClick(button) {
 	var checkBox = document.getElementById("check_rating");
 	var wl, wr;
 	if (checkBox.checked == true){
-		wl = 180;
+		wl = 160;
 		wr = 350;
 	}
 	else{
 		wl = 0;
-		wr = 530;
+		wr = 500;
 	}
 	//provavelmente esta verificacao sai, visto que as vars wl e wr estao definidas globalmente
 	// e sao mudadas no handle select
@@ -325,7 +325,7 @@ function handleSelect(){
 	var checkBox = document.getElementById("check_rating");
 
 	if (checkBox.checked == true){
-		wl = 180;
+		wl = 160;
 		wr = 350;
 		document.getElementById("sort_rating").disabled = false;
 		document.getElementById("sort_rating").style.opacity = 1;
@@ -663,7 +663,7 @@ function ratings(data, w) {
     //set up svg using margin conventions 
     var margin = {
         top: 5,
-        right: 25,
+        right: 10,
         bottom: 15,
         left: 10
     };

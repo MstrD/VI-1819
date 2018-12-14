@@ -44,6 +44,7 @@ h2 {
 	font-size: 10pt;
 	padding: 5px;
 	margin-top: 10px;
+	font-family: "roboto thin", sans-serif;
 }
 
 #select_series{
@@ -52,7 +53,6 @@ h2 {
 }
 
 #select_actors{
-	
 	width: 150px;
 	height: 245px;
 	text-align: left;
@@ -60,6 +60,30 @@ h2 {
 	float:left;
 	margin-left: 10px;
 
+}
+#select_city{
+	height: 80px;
+	text-align: center;
+	position: fixed;
+    top: 220px;
+    left: 725px;
+	z-index: 3;
+	background-color: rgb(128, 128, 128, .5);
+	display: none;
+	font-family: "roboto thin", sans-serif;
+}
+#geo_city{
+	border-bottom: 2px solid lightgrey;
+	margin-bottom: 3px;
+}
+.extra_info{
+	text-align:left;
+	margin-left: 2px;
+	font-family: "roboto thin", sans-serif;
+}
+.initial_info{
+	text-align: right;
+	font-family: "roboto thin", sans-serif;
 }
 
 .date_form{
@@ -268,11 +292,11 @@ h2 {
 
 
 #geomap{
-	margin-top: 40px;
+	margin-top: 45px;
 	overflow-x: hidden;
 	overflow-y: hidden;
 	margin-right: 10px;
-	height: 278px;
+	height: 273px;
 	width: 630px;
 }
 #geomap path {

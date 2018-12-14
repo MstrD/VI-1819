@@ -37,7 +37,7 @@
 			<tr><th> <div class="topic"> Show: </div> </th></tr>
 			<tr><th><input class="check" type="checkbox" name="option" id="check_wins" onchange="handleWins()" checked> Wins<br></th></tr>
 			<tr><th><input class="check" type="checkbox" name="option" id="check_nominees" onchange="handleNominees()" checked > Nominees<br></th></tr>
-			<tr><th><input style="margin-bottom: 10px;" class="check" type="checkbox" name="option" id="check_rating" onchange="handleSelect()" checked> Rating <br></th></tr>
+			<tr><th><input style="margin-bottom: 5px;" class="check" type="checkbox" name="option" id="check_rating" onchange="handleSelect()" checked> Rating <br></th></tr>
 			<tr><th> <div class="topic"> Sort by: </div></th> </tr>
 			<tr><th><input class="check" type="radio" name="bc" id="sort_wins" value="wins" onchange="handleClick(this)" checked> Wins<br></th></tr>
 			<tr><th><input class="check" type="radio" name="bc" id="sort_nominees" value="nominees" onchange="handleClick(this)"> Nominees<br> </th></tr>
@@ -74,6 +74,14 @@
 <div class="RT">
 	<div class="section_title"> Place of Birth of the nominated Actors</div>
 	<div id="geomap"></div>
+	<div class = "selection" id="select_city">
+		<table>
+			<tr><th colspan="2"> <div id="geo_city">Cidade</div></th></tr>
+			<tr><th> <div class="initial_info" id="geo_nactors">nº atores</div></th> <th><div class="extra_info"> Actors</div></th></tr>
+			<tr><th> <div class="initial_info" id="geo_wins">wins</div></th> <th><div class="extra_info"> Wins</div></th></tr>
+			<tr><th> <div class="initial_info" id="geo_nominees">nom</div></th> <th><div class="extra_info"> Nominees</div></th></tr>
+		</table>
+	</div>
 </div>
 	
 <div class="LB">
