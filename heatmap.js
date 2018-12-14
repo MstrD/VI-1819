@@ -302,7 +302,7 @@ function heatmap(data, dataWithAll, firstyear, lastyear) {
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     var x = d3.scaleLinear()
-        .range([40, width])
+        .range([50, width])
         .domain([years[0], years[years.length - 1]]);
 
     var y = d3.scaleBand()
@@ -421,7 +421,7 @@ function heatmap(data, dataWithAll, firstyear, lastyear) {
         .call(xAxis);
 
     var gy1 = svg.append("g")
-        .attr("transform", "translate(" + 15 + ", 0)")
+        .attr("transform", "translate(" + 25 + ", 0)")
         .attr("class", "a_wins")
         .call(yAxis1);
         
@@ -431,7 +431,7 @@ function heatmap(data, dataWithAll, firstyear, lastyear) {
         .text((d) => d.substr(1));
 
     var gy2 = svg.append("g")
-        .attr("transform", "translate(" + 35 + ", 0)")
+        .attr("transform", "translate(" + 45 + ", 0)")
         .attr("class", "a_noms")
         .call(yAxis2);
 
