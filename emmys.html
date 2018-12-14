@@ -83,11 +83,20 @@
 		</table>
 	</div>
 </div>
+
 	
 <div class="LB">
 	<div class="section_title" id="bubble_title"> Networks</div>
+	<div class = "selection" id="select_network">
+		<table>
+			<tr><th colspan="2"> <div id="bubble_network">Cidade</div></th></tr>
+			<tr><th> <div class="initial_info" id="bubble_nseries">nº atores</div></th> <th><div class="extra_info"> Actors</div></th></tr>
+			<tr><th> <div class="initial_info" id="bubble_wins">wins</div></th> <th><div class="extra_info"> Wins</div></th></tr>
+			<tr><th> <div class="initial_info" id="bubble_nominees">nom</div></th> <th><div class="extra_info"> Nominees</div></th></tr>
+		</table>
+	</div>
 	<input class="helper" type="text" id="network" value="" >
-	<input class="helper type="text" id="serie" value="" >
+	<input class="helper" type="text" id="serie" value="" >
 	<div id="mind">
 	</div>
 </div>
@@ -97,36 +106,36 @@
 
 <div class="RB">
 	<div class = "selection" id="select_actors">
-	<form action="" name="date" >
-	<table>
-		<tr><th><span>From: </span></th></tr>
-		<tr><th><input class="date_form" type="number" id="firstyear" min="1949" max="2017" step="1" value="1949" onchange="selectHeatMapRange()"></input></th></tr>
-		<tr><th><span>To: </span></th></tr>
-		<tr><th><input class="date_form" type="number" id="lastyear" min="1949" max="2017" step="1" value="2017" onchange="selectHeatMapRange()"></input></th></tr>
-	</table>
-	</form>
-	<form action="" name="bc_form" class="bc_sel">
-	<table>
-		<tr><th> <span style="margin-right:20px;"> Sort by: </span> </th></tr>
-		<tr><th><input class="check" type="radio" name="option" id="hm_wins" onchange="selectHeatMapData()"> Wins <br></th></tr>
-		<tr><th><input style="margin-bottom: 10px;" class="check" type="radio" name="option" id="hm_nominees" onchange="selectHeatMapData()" checked> Nominees <br></th></tr>
-	</table>
-    </form>
-	<div id="legend">
-	<table>
+		<form action="" name="date" >
+		<table>
+			<tr><th><span>From: </span></th></tr>
+			<tr><th><input class="date_form" type="number" id="firstyear" min="1949" max="2017" step="1" value="1949" onchange="selectHeatMapRange()"></input></th></tr>
+			<tr><th><span>To: </span></th></tr>
+			<tr><th><input class="date_form" type="number" id="lastyear" min="1949" max="2017" step="1" value="2017" onchange="selectHeatMapRange()"></input></th></tr>
+		</table>
+		</form>
+		<form action="" name="bc_form" class="bc_sel">
+		<table>
+			<tr><th> <span style="margin-right:20px;"> Sort by: </span> </th></tr>
+			<tr><th><input class="check" type="radio" name="option" id="hm_wins" onchange="selectHeatMapData()"> Wins <br></th></tr>
+			<tr><th><input style="margin-bottom: 10px;" class="check" type="radio" name="option" id="hm_nominees" onchange="selectHeatMapData()" checked> Nominees <br></th></tr>
+		</table>
+		</form>
+		<div id="legend">
+		<table>
 			<tr ><th><div style="background-color: #996600; width:15px; color: #996600;">_</div></th>
 				<th><div style=" text-align:left;"> Win</div></th>
 			</tr>
 			<tr ><th><div style="background-color: #adad85; color: #adad85;">_</div></th>
 				<th><div style=" text-align:left;"> Nominee</div></th>
 			</tr>
-	</table>
-	</div>
+		</table>
+		</div>
 	</div>
 	<div class="section_title"> Top 10 Actors: Awards</div>
 	
 	<div id="heatmap"></div>
-	<div class="heatmap_subtitles"> <span style="margin-right: 8px"> W </span> <span> N </span> </div>
+	<div class="heatmap_subtitles"> <span style="margin-right: 10px"> W </span> <span> N </span> </div>
 </div>
 
 

@@ -273,14 +273,14 @@ function selectHeatMapRange() {
 
 function heatmap(data, dataWithAll, firstyear, lastyear) {
     var margin = {
-        top: 5,
+        top: 10,
         right: 0,
         bottom: 15,
         left: 130
     };
 
     var width = 750 - margin.left - margin.right,
-        height = 250 - margin.top - margin.bottom;
+        height = 260 - margin.top - margin.bottom;
 
     var years = []
     for (var i = firstyear; i <= lastyear+1; i++) {

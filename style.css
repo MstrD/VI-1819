@@ -35,6 +35,8 @@ h2 {
 #legend{
 	margin-top: 5px;
 	font-size: 8pt;
+	position: absolute;
+	bottom: 15px;
 }
 
 .selection{
@@ -51,29 +53,41 @@ h2 {
 #select_series{
 	margin-left: 520px;
 	width: 150px;
+
+	height: 278px;
 }
 
 #select_actors{
 	width: 150px;
-	height: 245px;
+	height: 278px;
 	text-align: left;
 	left: 10px;
 	float:left;
 	margin-left: 10px;
-	margin-top: 10px;
 }
+
+#select_network{
+	text-align: center;
+	position: absolute;
+	right: 8px;
+	font-family: "roboto thin", sans-serif;
+	z-index: 3;
+	background-color: rgb(28, 31, 36, .6);
+}
+
 #select_city{
 	height: 80px;
 	text-align: center;
-	position: fixed;
-    top: 200px;
-    left: 725px;
+	position: absolute;
+    bottom: 8px;
+    left: 8px;
 	z-index: 3;
-	background-color: rgb(128, 128, 128, .5);
+	background-color: rgb(28, 31, 36, .6);
 	display: none;
 	font-family: "roboto thin", sans-serif;
 	padding-bottom: 9px;
 }
+
 #geo_city{
 	border-bottom: 2px solid lightgrey;
 	margin-bottom: 3px;
@@ -86,6 +100,7 @@ h2 {
 .initial_info{
 	text-align: right;
 	font-family: "roboto thin", sans-serif;
+	margin-left: 10px;
 }
 
 .date_form{
@@ -189,7 +204,7 @@ h2 {
 
 .LT {
 	height: 308px;
-    width: 695px;
+    width: 693px;
     position: fixed;
     z-index: 1;
     top: 5px;
@@ -202,12 +217,12 @@ h2 {
 }
 .RT {
 	height: 308px;
-    width: 636px;
+    width: 638px;
     position: fixed;
     z-index: 1;
     top: 5px;
     overflow-x: hidden;
-    left: 715px;
+    left: 713px;
 	padding-left: 10px;
 	border-right:2px dotted grey;
 	border-top:2px dotted grey;
@@ -287,7 +302,7 @@ h2 {
 	font-family: "oswald", sans-serif;
 	font-size:10pt;
 	text-align: left;
-	margin-left: 312px;
+	margin-left: 317px;
 	z-index: 4;
 	margin-top: -20px;
 }
@@ -309,7 +324,7 @@ h2 {
 	overflow-y: hidden;
 	margin-right: 10px;
 	height: 260px;
-	width: 630px;
+
 }
 #geomap path {
     fill: #ffffff;
