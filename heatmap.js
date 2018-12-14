@@ -395,7 +395,7 @@ function heatmap(data, dataWithAll, firstyear, lastyear) {
                 .filter((d) => d.properties.NAME === current_heatmap[index].PlaceOfBirth)
                 .transition()
                 .duration(1000)
-                .style("r", 8);
+                .attr("r", 8);
 				
                 d3.select(".hm_axis").selectAll(".tick")
                 .filter(() => d3.select(this) !== actual)
