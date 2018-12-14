@@ -1,7 +1,7 @@
 var dataset2;
-var w = 600,
-	h = 300,
-	diameter = 300,
+var w = 300,
+	h = 270,
+	diameter = 270,
 	angle,
 	x,y, i,r;
 	
@@ -223,7 +223,7 @@ function series(network){
 						word = splited[0];
 						for ( index = 1 ; index <= splited.length-1; ++index) { 	
 							word += " " + splited[index].slice(0,1);	
-							console.log(word);
+							//console.log(word);
 						}
 						dataSeries[i]["B"]	= word;
 					}

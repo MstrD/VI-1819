@@ -34,6 +34,7 @@ h2 {
 }
 #legend{
 	margin-top: 5px;
+	font-size: 8pt;
 }
 
 .selection{
@@ -43,7 +44,7 @@ h2 {
 	border-radius: 5px;
 	font-size: 10pt;
 	padding: 5px;
-	margin-top: 10px;
+	margin-top: 8px;
 	font-family: "roboto thin", sans-serif;
 }
 
@@ -59,18 +60,19 @@ h2 {
 	left: 10px;
 	float:left;
 	margin-left: 10px;
-
+	margin-top: 10px;
 }
 #select_city{
 	height: 80px;
 	text-align: center;
 	position: fixed;
-    top: 220px;
+    top: 200px;
     left: 725px;
 	z-index: 3;
 	background-color: rgb(128, 128, 128, .5);
 	display: none;
 	font-family: "roboto thin", sans-serif;
+	padding-bottom: 9px;
 }
 #geo_city{
 	border-bottom: 2px solid lightgrey;
@@ -186,7 +188,7 @@ h2 {
 }
 
 .LT {
-	height: 327px;
+	height: 308px;
     width: 695px;
     position: fixed;
     z-index: 1;
@@ -194,39 +196,44 @@ h2 {
 	left: 5px;
     overflow-x: hidden;
 	padding-left: 10px;
-	border: 2px dotted grey;
+	border-left:2px dotted grey;
+	border-right:2px dotted grey;
+	border-top:2px dotted grey;
 }
 .RT {
-	height: 327px;
-    width: 640px;
+	height: 308px;
+    width: 636px;
     position: fixed;
     z-index: 1;
     top: 5px;
     overflow-x: hidden;
-    right: 0;
-	border: 2px dotted grey;
+    left: 715px;
 	padding-left: 10px;
+	border-right:2px dotted grey;
+	border-top:2px dotted grey;
 }
 .LB {
-	height: 310px;
-    width: 400px;
+	height: 308px;
+    width: 394px;
     position: fixed;
     z-index: 1;
-    top: 320px;
+    top: 315px;
 	left: 5px;
     overflow-x: hidden;
-    padding-top: 10px;
+	padding-left: 10px;
 	border: 2px dotted grey;
 }
 .RB {
-	height: 290px;
+	height: 308px;
     width: 950px;
     position: fixed;
     z-index: 1;
-    top: 335px;
+    top: 315px;
     overflow-x: hidden;
-    right: 0; 
-	border: 2px dotted grey;
+    left: 411px;
+	border-bottom:2px dotted grey;
+	border-right:2px dotted grey;
+	border-top:2px dotted grey;
 }
 
 
@@ -285,18 +292,23 @@ h2 {
 	margin-top: -20px;
 }
 
+
 #mind {
-	margin-left:50px;
+	margin-left:30px;
+}
+#bubble_title{
+	float:left;
+	z-index:3;
+	margin-left: 160px;
 }
 
 
-
 #geomap{
-	margin-top: 45px;
+	margin-top: 40px;
 	overflow-x: hidden;
 	overflow-y: hidden;
 	margin-right: 10px;
-	height: 273px;
+	height: 260px;
 	width: 630px;
 }
 #geomap path {
