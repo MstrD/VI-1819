@@ -423,7 +423,9 @@ function heatmap(data, dataWithAll, firstyear, lastyear) {
     var gy1 = svg.append("g")
         .attr("transform", "translate(" + 25 + ", 0)")
         .attr("class", "a_wins")
-        .call(yAxis1);
+        .call(yAxis1)
+        .selectAll(".tick").selectAll("text")
+        .attr("x", "-10");
         
     d3.select(".a_wins")
         .selectAll(".tick")
