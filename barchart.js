@@ -572,7 +572,7 @@ function barchart(data, layers, w) {
         return x(d[0]);
     })
     .attr("width", function (d) {
-        return x(d[1]) - x(d[0]);
+        return 0;
     })
     // mouse events
     .on("mouseenter", function(d) {
@@ -636,7 +636,11 @@ function barchart(data, layers, w) {
 		reduceHeatmap(d.data.A);				
 		//document.getElementById("show").value = d.data.A;
 		
-	})
+    })
+    .merge(bars)
+    .transition()
+    .duration(2000)
+    .attr("width", (d) => x(d[1]) - x(d[0]));
 	
 
     // Prep the tooltip bits, initial display is hidden
@@ -721,11 +725,16 @@ function ratings(data, w) {
     })
     .attr("height", y.bandwidth())
     .attr("x", function (d) {
-        return x(d.I);
+        return x(0);
     })
     .attr("width", function (d) {
-        return x(0) - x(d.I);
-    });
+        return 0;
+    })
+    .merge(bars)
+    .transition()
+    .duration(2000)
+    .attr("x", (d) => x(d.I))
+    .attr("width", (d) => x(0) - x(d.I));
 
     // Prep the tooltip bits, initial display is hidden
     var tooltip = svg.append("g")
