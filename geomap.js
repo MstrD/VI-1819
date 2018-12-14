@@ -2,7 +2,7 @@ function geomap() {
     var margin = {
         top: 15,
         right: 0,
-        bottom: 15,
+        bottom: 20,
         left: 30
     };
 
@@ -13,7 +13,7 @@ function geomap() {
     var svg = d3.select("#geomap").append("svg")
         .attr("width", width)
         .attr("height", height + 50)
-        .attr("id", "geomap")
+        .attr("id", "map")
         .attr("translate", "(0," + height + ")");
 
     var projection = d3.geoMercator()
@@ -30,6 +30,7 @@ function geomap() {
             .append("path")
             .attr('d', path)
             .on("click", clicked);
+			//comentar linha de cima para tirar click no mapa em si
             /*.on("mouseover", function(d) {
                 d3.select(this)
                     .classed("active", true);
@@ -71,6 +72,7 @@ function geomap() {
             .attr("fill", "rgb(66, 134, 244)")
             .on('click', clicked)
             // mouse events
+			//depois sai para dar origem a secao
             .on("mouseenter", function(d) {
                 tooltip.style("display", null);
             })
@@ -121,8 +123,8 @@ function geomap() {
           k = 2;
           centered = d;
         } else {
-          x = width / 2 + 300;
-          y = height / 2 + 160;
+          x = width / 2 ;
+          y = height / 2 ;
           k = 1;
           centered = null;
         }
@@ -130,9 +132,11 @@ function geomap() {
         svg.selectAll("path")
             .classed("active", centered && function(d) { return d === centered; });
       
+		//.translate([width / 2 - point[0] * scale, height / 2 - point[1] * scale])
+		
         svg.transition()
             .duration(750)
-            .attr("transform", "translate(" + (width / 2 + 150) + "," + (height / 2 + 80) + ")scale(" + k + ")translate(" + -(x-150) + "," + -(y-80) + ")")
+            .attr("transform", "translate(" + (width / 2 - x) + "," + (height / 2 - y) + ")scale(" + k + ")")
             .style("stroke-width", 1.5 / k + "px");
       }
 

@@ -268,7 +268,12 @@ h2 {
 
 
 #geomap{
-	margin-top: 10px;
+	margin-top: 40px;
+	overflow-x: hidden;
+	overflow-y: hidden;
+	margin-right: 10px;
+	height: 278px;
+	width: 630px;
 }
 #geomap path {
     fill: #ffffff;
