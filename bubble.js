@@ -65,6 +65,19 @@ function bubbleMap(data){
     //dataset2 = data.slice(72, data.lenght);
 	for (i=0; i<dataset1.length; i++) {
 		r = dataset1[i]["C"]/5
+		
+		var word = "", index;
+		
+		if (dataset1[i]["A"].length > 8){
+			var splited = dataset1[i]["A"].split(/\s/);
+			if(splited.length > 1){
+				for ( index = 0 ; index <= splited.length-1; ++index) { 	
+					word += splited[index].slice(0,1);	
+				}
+				dataset1[i]["A"]	= word;
+			}
+		}
+		
 		children.push({'A': dataset1[i]["A"], 'B': parseInt(dataset1[i]["B"]), 
 		'C': parseInt(dataset1[i]["C"]), 'D': parseInt(dataset1[i]["D"]),
 		'E': parseFloat(dataset1[i]["E"]), "R":r});
@@ -134,12 +147,16 @@ function bubbleMap(data){
 		.style("fill", function(d,i) {
 			return color(i);
 		});
-
+		
 	node.append("text")
 		.attr("dy", ".2em")
 		.style("text-anchor", "middle")
 		.text(function(d) {
-			return d.data.A;
+			if (typeof d.data.A === "undefined"){
+			}else{
+				
+				return d.data.A;
+			}
 		})
 		.attr("font-family", "roboto", "sans-serif")
 		.attr("font-size", function(d){
@@ -151,18 +168,7 @@ function bubbleMap(data){
 				.style("cursor", "default");
 		});
 
-    node.append("text")
-		.attr("dy", "1.3em")	
-		.style("text-anchor", "middle")
-		.text(function(d) {
-			return d.data.C;
-		})
-		.attr("font-family",  "oswald thin", "sans-serif")
-		.attr("font-size", function(d){
-			return d.r/2;
-		})
-		.attr("fill", "black")
-		.on("mouseenter", function() {
+    node.on("mouseenter", function() {
 			d3.select(this)
 				.style("cursor", "default");
 		});
@@ -185,13 +191,10 @@ function bubbleMap(data){
 			//tooltip.style("display", null);
 			var xPosition = d3.mouse(this)[0] - 20;
 			var yPosition = d3.mouse(this)[1] - 25;
-			//tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
-			//tooltip.select("text").text(d.data.A);
 		})
 	node.on('click', function(d, i) {
 		if (d.height != 1){		
 			series(d.data.A);
-			//console.log(document.getElementById("network").value);
 			selectnetwork();
 		}
 		
@@ -199,6 +202,7 @@ function bubbleMap(data){
 	})
 	
 }
+		
 
 function series(network){
 	document.getElementById("mind").innerHTML = "";
@@ -211,6 +215,20 @@ function series(network){
 		//vai buscar as series so daquela network
 		for (i=1; i < dataSeries.length; i++) {
 			if (dataSeries[i].A == network){
+				
+				var word = "", index;
+				if (dataSeries[i]["B"].length > 12){
+					var splited = dataSeries[i]["B"].split(/\s/);
+					if(splited.length > 3 || dataSeries[i]["B"].length > 15){
+						word = splited[0];
+						for ( index = 1 ; index <= splited.length-1; ++index) { 	
+							word += " " + splited[index].slice(0,1);	
+							console.log(word);
+						}
+						dataSeries[i]["B"]	= word;
+					}
+				}
+				
 				children.push({'A': dataSeries[i]["A"], 'B': dataSeries[i]["B"], 
 						'C': parseInt(dataSeries[i]["C"]), 'D': parseInt(dataSeries[i]["D"]),
 						'E': parseFloat(dataSeries[i]["E"]), "R":r});	
@@ -293,18 +311,7 @@ function series(network){
 				.style("cursor", "default");
 		});
 
-    serie.append("text")
-		.attr("dy", "1.3em")	
-		.style("text-anchor", "middle")
-		.text(function(d) {
-			return d.data.C;
-		})
-		.attr("font-family", "oswald", "sans-serif")
-		.attr("font-size", function(d){
-			return d.r/4;
-		})
-		.attr("fill", "black")
-		.on("mouseenter", function() {
+    serie.on("mouseenter", function() {
 			d3.select(this)
 				.style("cursor", "default");
 		});
