@@ -53,11 +53,13 @@ function geomap() {
     });
     
     var myPlacesData = [];
+    var myPlacesName = [];
     d3.json("new_cities.geojson").then(function(gj) {
         for (var i = 0; i < myPlaces.length; i++) {
             for (var j = 0; j < gj.features.length; j++) {
-                if (myPlaces[i] == gj.features[j].properties.NAME) {
+                if (myPlaces[i] == gj.features[j].properties.NAME && !myPlacesName.includes(gj.features[j].properties.NAME)) {
                     myPlacesData.push(gj.features[j]);
+                    myPlacesName.push(gj.features[j].properties.NAME);
                 }
             }
         }
@@ -65,7 +67,7 @@ function geomap() {
             .selectAll("g")
             .data(gj.features).enter()
             .append("g")
-            .attr("transform", function (d) { return "translate(" + projection(d.geometry.coordinates[0][0]) + ")"; })
+            .attr("transform", (d) => "translate(" + projection(d.geometry.coordinates[0][0]) + ")")
             .attr("class", "allPoints")
             .append("circle")
             .attr("r", 2)

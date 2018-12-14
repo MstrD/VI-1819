@@ -369,7 +369,6 @@ function heatmap(data, dataWithAll, firstyear, lastyear) {
             for (var i = 0; i < all._groups[0].length; i++) {
                 if (all._groups[0][i].innerHTML === actual._groups[0][0].innerHTML) { index = i; break; }
             }
-            console.log(index);
             if (selected && d == current_actor) {
 				d3.select("#geomap").select("svg").selectAll(".points").selectAll("circle")
                 .filter((d, i) => d.properties.NAME === current_heatmap[index].PlaceOfBirth)
@@ -392,7 +391,6 @@ function heatmap(data, dataWithAll, firstyear, lastyear) {
                 selected = false;
 			}
 			else{
-                console.log(d3.select("#geomap").select("svg").selectAll(".points").selectAll("circle"));
                 d3.select("#geomap").select("svg").selectAll(".points").selectAll("circle")
                 .filter((d) => d.properties.NAME === current_heatmap[index].PlaceOfBirth)
                 .transition()
