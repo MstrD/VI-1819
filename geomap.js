@@ -9,6 +9,8 @@ function geomap() {
     var width = 750 - margin.left - margin.right,
         height = 250 - margin.top - margin.bottom,
         centered;
+    
+    var selected = false;
 
     var svg = d3.select("#geomap").append("svg")
         .attr("width", width)
@@ -82,7 +84,45 @@ function geomap() {
             .append("circle")
             .attr("r", 4)
             .attr("fill", "#cca300")
-            .on('click', clicked_city)
+            .on('click', function(d) {
+                clicked_city(d);
+                var actual = d3.select(this);
+                var index; 
+                var all = svg.selectAll(".points");
+                for (var i = 0; i < current_heatmap.length; i++) {
+                    if (current_heatmap[i].PlaceOfBirth === actual._groups[0][0].__data__.properties.NAME) { index = i; break; }
+                }
+                if (!selected) {
+                    d3.select("#heatmap").select("svg").select(".hm_axis").selectAll(".tick")
+                    .filter((d, i) => i !== index)
+                    .selectAll("text")
+                    .transition()
+                    .duration(1000)
+                    .style("opacity", 0.3);
+                    d3.select("#heatmap").select("svg").select(".hm_axis").selectAll(".tick")
+                    .filter((d, i) => i === index)
+                    .selectAll("text")
+                    .transition()
+                    .duration(1000)
+                    .style("color", "#f3ce13");
+                    selected = true;
+                }
+                else {
+                    d3.select("#heatmap").select("svg").select(".hm_axis").selectAll(".tick")
+                    .filter((d, i) => i !== index)
+                    .selectAll("text")
+                    .transition()
+                    .duration(1000)
+                    .style("opacity", 1.0);
+                    d3.select("#heatmap").select("svg").select(".hm_axis").selectAll(".tick")
+                    .filter((d, i) => i === index)
+                    .selectAll("text")
+                    .transition()
+                    .duration(1000)
+                    .style("color", "white");
+                    selected = false;
+                }
+            })
             .on("mouseenter", function(d) {
                 d3.select(this)
                 .style("cursor", "pointer");
@@ -132,7 +172,6 @@ function geomap() {
 						dataWeWant.push(dataS[i]);
 					}
 				}
-				console.log(dataWeWant);
 				document.getElementById("geo_city").innerHTML = dataWeWant[0].A;
 				document.getElementById("geo_nactors").innerHTML = dataWeWant[0].D;
 				document.getElementById("geo_wins").innerHTML = dataWeWant[0].B;
