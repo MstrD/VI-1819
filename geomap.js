@@ -11,6 +11,7 @@ function geomap() {
         centered;
     
     var selected = false;
+    var current_actor = null;
 
     var svg = d3.select("#geomap").append("svg")
         .attr("width", width)
@@ -92,22 +93,7 @@ function geomap() {
                 for (var i = 0; i < current_heatmap.length; i++) {
                     if (current_heatmap[i].PlaceOfBirth === actual._groups[0][0].__data__.properties.NAME) { index = i; break; }
                 }
-                if (!selected) {
-                    d3.select("#heatmap").select("svg").select(".hm_axis").selectAll(".tick")
-                    .filter((d, i) => i !== index)
-                    .selectAll("text")
-                    .transition()
-                    .duration(1000)
-                    .style("opacity", 0.3);
-                    d3.select("#heatmap").select("svg").select(".hm_axis").selectAll(".tick")
-                    .filter((d, i) => i === index)
-                    .selectAll("text")
-                    .transition()
-                    .duration(1000)
-                    .style("color", "#f3ce13");
-                    selected = true;
-                }
-                else {
+                if (selected && d === current_actor) {
                     d3.select("#heatmap").select("svg").select(".hm_axis").selectAll(".tick")
                     .filter((d, i) => i !== index)
                     .selectAll("text")
@@ -119,8 +105,48 @@ function geomap() {
                     .selectAll("text")
                     .transition()
                     .duration(1000)
+                    .style("opacity", 1.0)
                     .style("color", "white");
                     selected = false;
+                }
+                else if (selected && d !== current_actor) {
+                    // all names to white
+                    d3.select("#heatmap").select("svg").select(".hm_axis").selectAll(".tick")
+                    .selectAll("text")
+                    .style("color", "white");
+                    // only after that we can select another actor
+                    d3.select("#heatmap").select("svg").select(".hm_axis").selectAll(".tick")
+                    .filter((d, i) => i !== index)
+                    .selectAll("text")
+                    .transition()
+                    .duration(1000)
+                    .style("opacity", 0.3);
+                    d3.select("#heatmap").select("svg").select(".hm_axis").selectAll(".tick")
+                    .filter((d, i) => i === index)
+                    .selectAll("text")
+                    .transition()
+                    .duration(1000)
+                    .style("opacity", 1.0)
+                    .style("color", "#f3ce13");
+                    current_actor = d;
+                }
+                else {
+                    d3.select("#heatmap").select("svg").select(".hm_axis").selectAll(".tick")
+                    .filter((d, i) => i !== index)
+                    .selectAll("text")
+                    .transition()
+                    .duration(1000)
+                    .style("opacity", 0.3);
+                    d3.select("#heatmap").select("svg").select(".hm_axis").selectAll(".tick")
+                    .filter((d, i) => i === index)
+                    .selectAll("text")
+                    .transition()
+                    .duration(1000)
+                    .style("opacity", 1.0)
+                    .style("color", "#f3ce13");
+                    selected = true;
+                    current_actor = d;
+                    console.log(current_actor);
                 }
             })
             .on("mouseenter", function(d) {
