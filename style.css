@@ -71,8 +71,13 @@ h2 {
 	position: absolute;
 	right: 8px;
 	font-family: "roboto thin", sans-serif;
+	display: none;
 	z-index: 3;
 	background-color: rgb(28, 31, 36, .6);
+}
+#bubble_network{
+	border-bottom: 2px solid lightgrey;
+	margin-bottom: 3px
 }
 
 #select_city{
@@ -100,7 +105,7 @@ h2 {
 .initial_info{
 	text-align: right;
 	font-family: "roboto thin", sans-serif;
-	margin-left: 10px;
+	margin-left: 8px;
 }
 
 .date_form{

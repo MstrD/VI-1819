@@ -56,15 +56,15 @@ function rgbToHex(r, g, b) {
 	
 function bubbleMap(data){
 	data.sort(function(a, b) {
-        return b.C - a.C;
+        return b.D - a.D;
     })
     var dataset1  ,children = [];
 	//console.log("before",dataset1);
-	dataset1 = data.slice(1,50);
+	dataset1 = data.slice(0,50);
 	//console.log("ater",dataset1);
     //dataset2 = data.slice(72, data.lenght);
 	for (i=0; i<dataset1.length; i++) {
-		r = dataset1[i]["C"]/5
+		r = dataset1[i]["D"]/5;
 		
 		var word = "", index;
 		
@@ -80,7 +80,7 @@ function bubbleMap(data){
 		
 		children.push({'A': dataset1[i]["A"], 'B': parseInt(dataset1[i]["B"]), 
 		'C': parseInt(dataset1[i]["C"]), 'D': parseInt(dataset1[i]["D"]),
-		'E': parseFloat(dataset1[i]["E"]), "R":r});
+		'E': parseFloat(dataset1[i]["E"]),'F': parseFloat(dataset1[i]["F"]), "R":r});
     }	
 	//todos os objetos criados para as bolhas
 	var full = {children};
@@ -119,7 +119,7 @@ function bubbleMap(data){
 		.attr("class", "bubble");
 
 	var nodes = d3.hierarchy(full)
-		.sum(function(d) { return d.C; });
+		.sum(function(d) { return d.D; });
 	
 	var node = svg.selectAll(".node")
 		.data(bubble(nodes).descendants())
@@ -196,6 +196,12 @@ function bubbleMap(data){
 		if (d.height != 1){		
 			series(d.data.A);
 			selectnetwork();
+			console.log(d.data);
+			document.getElementById("bubble_network").innerHTML = d.data.A;
+			document.getElementById("bubble_nseries").innerHTML = d.data.F;
+			document.getElementById("bubble_wins").innerHTML = d.data.C;
+			document.getElementById("bubble_nominees").innerHTML = d.data.B;
+			document.getElementById("select_network").style.display= 'block' ;
 		}
 		
 		//meter aqui funcao para mudar o grafico la em cima
@@ -205,17 +211,18 @@ function bubbleMap(data){
 		
 
 function series(network){
+	
 	document.getElementById("mind").innerHTML = "";
 	var children = [];
 	d3.json("networks_series_BL.json").then(function (dataS) {
 		dataS.sort(function(a, b) {
-			return b.C - a.C;
+			return b.E - a.E;
 		})
-		dataSeries = dataS.slice(1,dataS.lenght);
+		dataSeries = dataS.slice(0,dataS.lenght);
 		//vai buscar as series so daquela network
 		for (i=1; i < dataSeries.length; i++) {
 			if (dataSeries[i].A == network){
-				
+				r = dataSeries[i]["E"]/5;
 				var word = "", index;
 				if (dataSeries[i]["B"].length > 12){
 					var splited = dataSeries[i]["B"].split(/\s/);
@@ -267,7 +274,7 @@ function series(network){
 	//console.log("full2", full2);
 
 	var series = d3.hierarchy(full2)
-		.sum(function(d) { return d.C; });
+		.sum(function(d) { return d.E; });
 	
 	var serie = svg.selectAll(".serie")
 		.data(bubble2(series).descendants())
@@ -344,12 +351,13 @@ function series(network){
 			setOriginals();
 			d3.json("networks_count_BL.json").then(function (data) {
 			bubbleMap(data);
+			document.getElementById("select_network").style.display= 'none' ;
 		});
 			
 		}else{			
 			document.getElementById("serie").value = d.data.B;
 		}
-		//series(d.data.A);
+		
 		
 	})
 		
