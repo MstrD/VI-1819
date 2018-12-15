@@ -354,7 +354,7 @@ function series(network){
 			document.getElementById("select_network").style.display= 'none' ;
 		});
 			
-		}else{			
+		}else{
 			document.getElementById("serie").value = d.data.B;
 		}
 		

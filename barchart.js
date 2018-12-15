@@ -81,7 +81,7 @@ d3.json("final_TL.json").then(function (data) {
 	wl = 160;
 	wr = 350;
     barchart(win, layers1, wr);
-    ratings(win,wl);
+    ratings(win,wl, false);
 	last_layer = layers1;
 	last_sort = win;
 });
@@ -182,19 +182,19 @@ function selectnetwork(){
 	
 		if (s_wins.checked == true){
 			barchart(win, layers1, wr);
-			ratings(win,wl);
+			ratings(win,wl, false);
 			last_layer = layers1;
 			last_sort = win;
 		}
 		else if (s_nominees.checked == true) {
 			barchart(nominee, layers2, wr);
-			ratings(nominee,wl);
+			ratings(nominee,wl, false);
 			last_layer = layers2;
 			last_sort = nominee;
 		}
 		else{
 			barchart(rating, layers3, wr);
-			ratings(rating,wl);
+			ratings(rating,wl, false);
 			last_layer = layers3;
 			last_sort = rating;
 		}
@@ -265,19 +265,19 @@ function setOriginals() {
 
 	if (s_wins.checked == true){
         barchart(win, layers1, wr);
-		ratings(win,wl);
+		ratings(win,wl, false);
 		last_layer = layers1;
         last_sort = win;
 	}
 	else if (s_nominees.checked == true) {
 		barchart(nominee, layers2, wr);
-		ratings(nominee,wl);
+		ratings(nominee,wl, false);
 		last_layer = layers2;
 		last_sort = nominee;
 	}
 	else{
 		barchart(rating, layers3, wr);
-		ratings(rating,wl);
+		ratings(rating,wl, false);
 		last_layer = layers3;
 		last_sort = rating;
     }
@@ -303,19 +303,19 @@ function handleClick(button) {
 	// e sao mudadas no handle select
     if (button.value == "nominees") {
         barchart(nominee, layers2, wr);
-        ratings(nominee, wl);
+        ratings(nominee, wl, false);
 		last_layer = layers2;
 		last_sort = nominee;
     }
 	else if (button.value == "rating"){
 		barchart(rating, layers3,wr);
-		ratings(rating,wl);
+		ratings(rating,wl, false);
 		last_layer = layers3;
 		last_sort = rating;
 	}
     else {
         barchart(win, layers1, wr);
-        ratings(win, wl);
+        ratings(win, wl, false);
 		last_layer = layers1;
 		last_sort = win;
     }
@@ -330,6 +330,9 @@ function handleSelect(){
 		document.getElementById("sort_rating").disabled = false;
 		document.getElementById("sort_rating").style.opacity = 1;
 		has_rate = true;
+		document.getElementById("barchart").innerHTML = "";
+		barchart(last_sort, last_layer,wr);
+		ratings(last_sort,wl, true);
 	}
 	else{
 		document.getElementById("sort_rating").disabled = true;
@@ -337,10 +340,17 @@ function handleSelect(){
 		wl = 0;
 		wr = 500;
 		has_rate = false;
+		document.getElementById("barchart").innerHTML = "";
+		barchart(last_sort, last_layer,350);
+		ratings(last_sort, 160, true);
+		setTimeout(function () {
+			document.getElementById("barchart").innerHTML = "";
+			barchart(last_sort, last_layer,wr);
+			ratings(last_sort,wl, true);
+		}, 2000);
+		
 	}
-	document.getElementById("barchart").innerHTML = "";
-	barchart(last_sort, last_layer,wr);
-    ratings(last_sort,wl);
+	
 }
 
 function check(layer, sort, op){
@@ -572,7 +582,7 @@ function barchart(data, layers, w) {
         return x(d[0]);
     })
     .attr("width", function (d) {
-        return 0;
+        return x(d[1]) - x(d[0]);
     })
     // mouse events
     .on("mouseenter", function(d) {
@@ -636,11 +646,7 @@ function barchart(data, layers, w) {
 		reduceHeatmap(d.data.A);				
 		//document.getElementById("show").value = d.data.A;
 		
-    })
-    .merge(bars)
-    .transition()
-    .duration(2000)
-    .attr("width", (d) => x(d[1]) - x(d[0]));
+    });
 	
 
     // Prep the tooltip bits, initial display is hidden
@@ -663,7 +669,7 @@ function barchart(data, layers, w) {
 
 }
 
-function ratings(data, w) {
+function ratings(data, w, animation) {
     //set up svg using margin conventions 
     var margin = {
         top: 5,
@@ -717,24 +723,62 @@ function ratings(data, w) {
         .enter()
         .append("g");
 
-    //append rects
-    bars.append("rect")
-    .attr("class", "bar_rating")
-    .attr("y", function (d) {
-        return y(d.A);
-    })
-    .attr("height", y.bandwidth())
-    .attr("x", function (d) {
-        return x(0);
-    })
-    .attr("width", function (d) {
-        return 0;
-    })
-    .merge(bars)
-    .transition()
-    .duration(2000)
-    .attr("x", (d) => x(d.I))
-    .attr("width", (d) => x(0) - x(d.I));
+    if(animation && has_rate){
+		//append rects
+		bars.append("rect")
+		.attr("class", "bar_rating")
+		.attr("y", function (d) {
+			return y(d.A);
+		})
+		.attr("height", y.bandwidth())
+		.attr("x", function (d) {
+			return x(0);
+		})
+		.attr("width", function (d) {
+			return 0;
+		})
+		.merge(bars)
+		.transition()
+		.duration(2000)
+		.attr("x", (d) => x(d.I))
+		.attr("width", (d) => x(0) - x(d.I));
+	}
+	else if(has_rate == false){
+		bars.append("rect")
+		.attr("class", "bar_rating")
+		.attr("y", function (d) {
+			return y(d.A);
+		})
+		.attr("height", y.bandwidth())
+		.attr("x", function (d) {
+			return x(d.I);
+		})
+		.attr("width", function (d) {
+			return  x(0) - x(d.I);
+		})
+		.merge(bars)
+		.transition()
+		.duration(2000)
+		.attr("x", (d) => x(0))
+		.attr("width", (d) => 0);
+	}
+	else{
+		//append rects
+		bars.append("rect")
+		.attr("class", "bar_rating")
+		.attr("y", function (d) {
+			return y(d.A);
+		})
+		.attr("height", y.bandwidth())
+		.attr("x", function (d) {
+			return x(d.I);
+		})
+		.attr("width", function (d) {
+			return x(0) - x(d.I);
+		});
+	}
+	
+	
 
     // Prep the tooltip bits, initial display is hidden
     var tooltip = svg.append("g")
