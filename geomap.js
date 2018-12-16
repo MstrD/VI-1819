@@ -1,3 +1,5 @@
+var current_city = null;
+
 function geomap() {
     var margin = {
         top: 15,
@@ -11,7 +13,7 @@ function geomap() {
         centered;
     
     var selected = false;
-    var current_actor = null;
+	current_city = null;
 
     var svg = d3.select("#geomap").append("svg")
         .attr("width", width)
@@ -66,7 +68,16 @@ function geomap() {
             .append("circle")
             .attr("r", 2)
             .attr("fill", "rgb(66, 134, 244)")
-            .on('click', clicked_city)
+			//meter aqui tbm sobre a selecao
+            .on('click', function(d){
+				clicked_city(d);
+				d3.select("#heatmap").select("svg").select(".hm_axis").selectAll(".tick")
+                    .selectAll("text")
+                    .transition()
+                    .duration(1000)
+                    .style("opacity", 1.0)
+					.style("color", "white");
+			})
             .on("mouseenter", function(d) {
                 d3.select(this)
                 .style("cursor", "pointer");
@@ -88,65 +99,68 @@ function geomap() {
             .on('click', function(d) {
                 clicked_city(d);
                 var actual = d3.select(this);
-                var index; 
+                var index = []; 
                 var all = svg.selectAll(".points");
                 for (var i = 0; i < current_heatmap.length; i++) {
-                    if (current_heatmap[i].PlaceOfBirth === actual._groups[0][0].__data__.properties.NAME) { index = i; break; }
+                    if (current_heatmap[i].PlaceOfBirth === actual._groups[0][0].__data__.properties.NAME) { index.push(i); }
                 }
-                if (selected && d === current_actor) {
+				console.log(index);
+                if (selected && d === current_city) {
                     d3.select("#heatmap").select("svg").select(".hm_axis").selectAll(".tick")
-                    .filter((d, i) => i !== index)
-                    .selectAll("text")
-                    .transition()
-                    .duration(1000)
-                    .style("opacity", 1.0);
-                    d3.select("#heatmap").select("svg").select(".hm_axis").selectAll(".tick")
-                    .filter((d, i) => i === index)
                     .selectAll("text")
                     .transition()
                     .duration(1000)
                     .style("opacity", 1.0)
-                    .style("color", "white");
+					.style("color", "white");
+					
                     selected = false;
+					current_city= null;
                 }
-                else if (selected && d !== current_actor) {
+                else if (selected && d !== current_city) {
                     // all names to white
                     d3.select("#heatmap").select("svg").select(".hm_axis").selectAll(".tick")
                     .selectAll("text")
+					.transition()
+                    .duration(1000)
+                    .style("opacity", 1.0)
                     .style("color", "white");
                     // only after that we can select another actor
                     d3.select("#heatmap").select("svg").select(".hm_axis").selectAll(".tick")
-                    .filter((d, i) => i !== index)
+                    .filter((d, i) => !(index.includes(i)))
                     .selectAll("text")
                     .transition()
                     .duration(1000)
-                    .style("opacity", 0.3);
+                    .style("opacity", 0.3)
+					.style("color", "white");
+					
                     d3.select("#heatmap").select("svg").select(".hm_axis").selectAll(".tick")
-                    .filter((d, i) => i === index)
+                    .filter((d, i) => index.includes(i))
                     .selectAll("text")
                     .transition()
                     .duration(1000)
                     .style("opacity", 1.0)
                     .style("color", "#f3ce13");
-                    current_actor = d;
+                    current_city = d;
                 }
                 else {
                     d3.select("#heatmap").select("svg").select(".hm_axis").selectAll(".tick")
-                    .filter((d, i) => i !== index)
+                    .filter((d, i) => !(index.includes(i)))
                     .selectAll("text")
                     .transition()
                     .duration(1000)
-                    .style("opacity", 0.3);
+                    .style("opacity", 0.3)
+					.style("color", "white");
+					
                     d3.select("#heatmap").select("svg").select(".hm_axis").selectAll(".tick")
-                    .filter((d, i) => i === index)
+                    .filter((d, i) => index.includes(i))
                     .selectAll("text")
                     .transition()
                     .duration(1000)
                     .style("opacity", 1.0)
                     .style("color", "#f3ce13");
+					
                     selected = true;
-                    current_actor = d;
-                    console.log(current_actor);
+                    current_city = d;
                 }
             })
             .on("mouseenter", function(d) {
@@ -162,6 +176,12 @@ function geomap() {
     function clicked(d) {
         var x, y, k;
 		document.getElementById("select_city").style.display= 'none' ;
+		d3.select("#heatmap").select("svg").select(".hm_axis").selectAll(".tick")
+                    .selectAll("text")
+                    .transition()
+                    .duration(1000)
+                    .style("opacity", 1.0)
+					.style("color", "white");
         if (d && centered !== d) {
           var centroid = path.centroid(d);
           x = centroid[0];
