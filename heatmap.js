@@ -371,31 +371,38 @@ function heatmap(data, dataWithAll, firstyear, lastyear) {
             }
             if (selected && d == current_actor) {
 				d3.select("#geomap").select("svg").selectAll(".points").selectAll("circle")
-                .filter((d, i) => d.properties.NAME === current_heatmap[index].PlaceOfBirth)
                 .transition()
                 .duration(1000)
                 .attr("r", 4);
 				
                 d3.select(".hm_axis").selectAll(".tick")
-                .filter(() => d3.select(this) !== actual)
                 .transition()
                 .duration(400)
-                .style("opacity", 1.0);
-				
-                d3.select(this)
-                .transition()
-                .duration(400)
-				.style("opacity", 1.0)
-                .style("color", "white");
+                .style("opacity", 1.0)
+				.style("color", "white");
 				
                 selected = false;
 			}
 			else{
+				//reset to the other dots
+				d3.select("#geomap").select("svg").selectAll(".points").selectAll("circle")
+                .transition()
+                .duration(1000)
+                .attr("r", 4);
+				
                 d3.select("#geomap").select("svg").selectAll(".points").selectAll("circle")
                 .filter((d) => d.properties.NAME === current_heatmap[index].PlaceOfBirth)
                 .transition()
                 .duration(1000)
                 .attr("r", 8);
+				
+				// all names to white first
+                d3.select("#heatmap").select("svg").select(".hm_axis").selectAll(".tick")
+                    .selectAll("text")
+					.transition()
+                    .duration(1000)
+                    .style("opacity", 1.0)
+                    .style("color", "white");
 				
                 d3.select(".hm_axis").selectAll(".tick")
                 .filter(() => d3.select(this) !== actual)
