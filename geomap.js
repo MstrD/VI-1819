@@ -67,7 +67,7 @@ function geomap() {
             .attr("class", "allPoints")
             .append("circle")
             .attr("r", 2)
-            .attr("fill", "rgb(66, 134, 244)")
+            .attr("fill", "#008080")
 			//meter aqui tbm sobre a selecao
             .on('click', function(d){
 				clicked_city(d);
