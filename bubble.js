@@ -67,7 +67,7 @@ function bubbleMap(data){
 		r = dataset1[i]["D"]/5;
 		
 		var word = "", index;
-		
+		var originalName = dataset1[i]["A"];
 		if (dataset1[i]["A"].length > 8){
 			var splited = dataset1[i]["A"].split(/\s/);
 			if(splited.length > 1){
@@ -80,7 +80,7 @@ function bubbleMap(data){
 		
 		children.push({'A': dataset1[i]["A"], 'B': parseInt(dataset1[i]["B"]), 
 		'C': parseInt(dataset1[i]["C"]), 'D': parseInt(dataset1[i]["D"]),
-		'E': parseFloat(dataset1[i]["E"]),'F': parseFloat(dataset1[i]["F"]), "R":r});
+		'E': parseFloat(dataset1[i]["E"]),'F': parseFloat(dataset1[i]["F"]), "R":r, "O":originalName});
     }	
 	//todos os objetos criados para as bolhas
 	var full = {children};
@@ -167,7 +167,7 @@ function bubbleMap(data){
 			d3.select(this)
 				.style("cursor", "default");
 		});
-
+	
     node.on("mouseenter", function() {
 			d3.select(this)
 				.style("cursor", "default");
@@ -194,10 +194,10 @@ function bubbleMap(data){
 		})
 	node.on('click', function(d, i) {
 		if (d.height != 1){		
-			series(d.data.A);
+			series(d.data.O);
 			selectnetwork();
-			console.log(d.data);
-			document.getElementById("bubble_network").innerHTML = d.data.A;
+			console.log(d.data.O);
+			document.getElementById("bubble_network").innerHTML = d.data.O;
 			document.getElementById("bubble_nseries").innerHTML = d.data.F;
 			document.getElementById("bubble_wins").innerHTML = d.data.C;
 			document.getElementById("bubble_nominees").innerHTML = d.data.B;
